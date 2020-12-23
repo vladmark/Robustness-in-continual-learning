@@ -11,9 +11,6 @@ import torch
 import pickle
 
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-from collections import defaultdict
-from torch import nn
 
 # setup device (CPU/GPU)
 if torch.cuda.is_available():
@@ -23,24 +20,23 @@ else:
 # device = torch.device('cpu')
 
 print(f"Working on device: {device}.")
-basepath="."
+basepath="./"
 
 """Imgnet premade downloader: https://towardsdatascience.com/how-to-scrape-the-imagenet-f309e02de1f4"""
 
 """https://medium.com/@staticmukesh/how-i-managed-to-delete-1-billions-files-from-my-google-drive-account-9fdc67e6aaca """
 
-from tiny_imagenet_stats import tiny_imagenet_stats
-
+# from dataset_management.tinyimgnet.tiny_imagenet_stats import tiny_imagenet_stats
 # tiny_imagenet_stats(basepath)
 
 """## **Datasets** """
 
-from datasets import get_cl_dset
-from datasets import get_task
-from datasets import TinyImagenetTask
+from dataset_management.tinyimgnet.datasets import get_cl_dset
+from dataset_management.tinyimgnet.datasets import get_task
+from dataset_management.tinyimgnet.datasets import TinyImagenetTask
 
 """### Getting the datasets"""
-cl_dset = get_cl_dset(basepath+"/cl_t5_c15.txt")
+cl_dset = get_cl_dset(basepath+"cl_t5_c15.txt")
 """
 cl_dset: a dictionary containing
         -> key 'meta': dict with keys: cls_no (classes per task), task_no (# of tasks), misc (number of misc classes)
@@ -96,7 +92,7 @@ baseline_datasets = list()
 for task_no in range(cl_dset['meta']['task_no']):
   print(f"Showing info for task {task_no}")
   subset = all_classes[task_no*cl_dset['meta']['cls_no']:(task_no+1)*cl_dset['meta']['cls_no']]
-  dset_task = TinyImagenetTask(basepath+"/data/tiny-imagenet-200/train", task,
+  dset_task = TinyImagenetTask(basepath+"data/tiny-imagenet-200/train", task,
                         transform = torchvision.transforms.Compose([
                           torchvision.transforms.ToTensor(),
                           torchvision.transforms.RandomHorizontalFlip(p=0.5),
@@ -151,7 +147,6 @@ from Models import LeNet5
 from Models import ModDenseNet
 from Models import Block
 from Trainer import Trainer
-from Trainer import plot_metrics
 
 """Choose model to be used"""
 
@@ -185,25 +180,19 @@ def get_model(model_type):
   return model
 
 #@title Choose model
+"""Getting info back"""
+
+
 model_type = "ModDenseNet" #@param ["LeNet", "LeNet5", "Resnet101", "Resnet50", "Resnet18", "Resnet152", "Densenet169", "Densenet201", "ModDenseNet"]
 model = get_model(model_type)
 
-#auxiliary
+get_back = False
+if get_back:
+    model.load_state_dict(basepath+"savedump/" + model.__class__.__name__ + '_' + str(trainer.num_epochs) + '_epochs' + '_lr' + str(
+        trainer.lr) + '_model_after_task' + str(task_no))
 
-def plot_metrics(metrics: dict, task_no = -1, title="Losses for given task"):
-    """
-    Plots training/validation losses.
-    :param metrics: dictionar
-    """
-    plt.figure()
-    plt.plot(metrics['train_losses'][task_no], c='r', label='Train loss') #RIGHT NOW ONLY PLOTS LOSSES ON THE TASK THAT WAS TRAINED - that's what the -1 does.
-    plt.plot(metrics['test_losses'][task_no], c='g', label='Test loss')
-    plt.plot(metrics['train_acc'][task_no], c='b', label='Train acc')
-    plt.plot(metrics['test_acc'][task_no], c='y', label='Test acc')
-    plt.title(title)
-    plt.xlabel('Epoch')
-    plt.legend()
-    plt.show()
+
+#auxiliary
 
 hyperparams = {
     "batch_size": 5, #1500 batches for dataset of 7500
@@ -226,7 +215,7 @@ each a list of lists:
 for task i, the list contains all losses on the previous tasks including the current one for each epoch.
 """
 
-def train_datasets(model, trainer, datasets, save_on_the_way = True, save_appendix = ""):
+def train_datasets(model, trainer, datasets, save_on_the_way = True, save_appendix = "", start_from_task = 0):
   metrics = list()
   train_loaders, test_loaders = [], []
   for task_no in range(len(datasets)):
@@ -241,14 +230,15 @@ def train_datasets(model, trainer, datasets, save_on_the_way = True, save_append
     
     print(f"\n \n Finished processing dataset for task {task_no}. Proceeding to training.")
     #training (all tasks have the same # epochs and batch sizes)
-    metrics.append(trainer.train(train_loaders, test_loaders))
-    if save_on_the_way:
+    if task_no >= start_from_task:
+        metrics.append(trainer.train(train_loaders, test_loaders))
+    if save_on_the_way and task_no >= start_from_task:
       import pickle
-      with open(basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_metrics_task_'+str(task_no)+save_appendix, 'wb') as filehandle:
-        pickle.dump(metrics[task_no], filehandle)
+      with open(basepath+'savedump'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_metrics_task_'+str(task_no)+save_appendix, 'wb') as filehandle:
+        pickle.dump(metrics[-1], filehandle)
       torch.save(model.state_dict(), 
-                basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_model_after_task'+str(task_no))+save_appendix
-    plot_metrics(metrics[task_no], title = f"Task {task_no} metrics after {trainer.num_epochs} epochs with learning rate {trainer.lr} for model {model.__class__.__name__}.")
+                basepath+'savedump'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_model_after_task'+str(task_no)+save_appendix)
+    # plot_metrics(metrics[task_no], title = f"Task {task_no} metrics after {trainer.num_epochs} epochs with learning rate {trainer.lr} for model {model.__class__.__name__}.")
     #RESETTING OPTIMIZER FOR BEGINNING OF NEW TASK
     if hyperparams['learning_algo'] == 'adam':
             trainer.optimizer = torch.optim.Adam(params = trainer.model.parameters(),
@@ -258,8 +248,8 @@ def train_datasets(model, trainer, datasets, save_on_the_way = True, save_append
                                  lr = hyperparams['learning_rate'], weight_decay = hyperparams['weight_decay'])
   return metrics
 
-metrics = train_datasets(model, trainer, datasets, save_on_the_way = True)
-with open(basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics', 'wb') as filehandle:
+metrics = train_datasets(model, trainer, datasets, save_on_the_way = True, save_appendix = "", start_from_task = 1)
+with open(basepath+'savedump/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics', 'wb') as filehandle:
       pickle.dump(metrics, filehandle)
 
 """Training on baseline dataset"""
@@ -270,7 +260,7 @@ if reinitialise_model:
   model = get_model(model_type)
 #MODEL & TRAINER MUST BE REINITIALISED IF ALREADY TRAINED ON GOOD TASKS
 metrics_baseline = train_datasets(model, trainer, baseline_datasets, save_on_the_way = True, save_appendix = "_baseline")
-with open(basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics'+"_baseline", 'wb') as filehandle:
+with open(basepath+"savedump/"+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics'+"_baseline", 'wb') as filehandle:
       pickle.dump(metrics_baseline, filehandle)
 
 """Training on big dataset"""
@@ -284,32 +274,11 @@ with open(basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_ep
 #   test_loader = [torch.utils.data.DataLoader(test_dset, batch_size=trainer.batch_size, shuffle=True, drop_last=False)]
 #   metrics_big_dset = trainer.train(train_loader, test_loader)
 #   import pickle
-#   with open(basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_metrics_big_dset', 'wb') as filehandle:
+#   with open(basepath+"savedump/"+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_metrics_big_dset', 'wb') as filehandle:
 #     pickle.dump(metrics_big_dset, filehandle)
 #   torch.save(model.state_dict(),
-#               basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_model_after_big_dset')
+#               basepath+"savedump/"+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_model_after_big_dset')
 #
 #   plot_metrics(metrics_big_dset, title = f"Metrics for combined dataset for model {model.__class__.__name__}.")
 
-"""Getting info back"""
-
-get_back = False
-if get_back:
-    #@title Settings for importing back data
-    model_type = "LeNet" #@param ["LeNet", "LeNet5", "Resnet101"]
-    task = "whole_dataset" #@param ["whole_dataset", "0", "1", "2", "3", "4", "5", "6"]
-    if model_type == "LeNet":
-      model = LeNet()
-    elif model_type == "LeNet5":
-      model = LeNet5()
-    elif model_type == "Resnet101":
-      model = resnet101
-
-    if task == "whole_dataset":
-      model.load_state_dict(torch.load(basepath+'/'+model.__class__.__name__+'_model_after'+'_big_dset'))
-      with open(basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_metrics_big_dset', 'rb') as filehandle:
-        metrics = pickle.load(filehandle)
-    else:
-      model.load_state_dict(torch.load(basepath+'/'+model.__class__.__name__+'_model_after'+'_task'+int(task)))
-      with open(basepath+'/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_metrics_task_'+str(task_no), 'rb') as filehandle:
-        metrics = pickle.load(filehandle)
+from plotting_utils import plot_accuracies_for_model

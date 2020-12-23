@@ -15,7 +15,7 @@ def plot_metrics(metrics: dict, task_no = -1, title="Losses for given task"):
     plt.title(title)
     plt.xlabel('Epoch')
     plt.legend()
-    plt.show()
+    plt.show(block=False)
 
 
 class Trainer:
@@ -159,15 +159,16 @@ class Trainer:
                     test_acc[task_no].append(epoch_test_acc)
 
                 #DO PRINTS AND PLOTS
-                if epoch % 3 == 0 and epoch > 0:
-                  interm_plot_metrics = {"train_losses": train_losses,
-                      "test_losses": test_losses,
-                      "train_acc": train_acc,
-                      "test_acc": test_acc}
-                  plot_metrics(metrics = interm_plot_metrics, task_no = -1, title = f"Metrics after {epoch} epochs with learning rate {self.lr} for model {self.model.__class__.__name__}.")
-                  if len(train_loaders) > 1:
-                    for task_no in range(len(train_loaders)-1):
-                      plot_metrics(metrics = interm_plot_metrics, task_no = task_no, title = f"Same as before, revisiting task {task_no}.")
+                if False:
+                    if epoch % 3 == 0 and epoch > 0:
+                      interm_plot_metrics = {"train_losses": train_losses,
+                          "test_losses": test_losses,
+                          "train_acc": train_acc,
+                          "test_acc": test_acc}
+                      plot_metrics(metrics = interm_plot_metrics, task_no = -1, title = f"Metrics after {epoch} epochs with learning rate {self.lr} for model {self.model.__class__.__name__}.")
+                      if len(train_loaders) > 1:
+                        for task_no in range(len(train_loaders)-1):
+                          plot_metrics(metrics = interm_plot_metrics, task_no = task_no, title = f"Same as before, revisiting task {task_no}.")
         print(f"On training task {len(train_loaders)} task 0 was retested on {len(train_losses[0])}")
         return {"train_losses": train_losses,
                 "test_losses": test_losses,

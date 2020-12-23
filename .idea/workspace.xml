@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e42feaa8-a304-4575-9812-0211c89926b2" name="Default Changelist" comment="" />
+    <list default="true" id="e42feaa8-a304-4575-9812-0211c89926b2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/imgnet_analyser.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/savedump/ModDenseNet_25_epochs_lr0.001_overall_metrics" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModDenseNet_25_epochs_lr0.001_overall_metrics" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/tinyimgnet/datasets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imgnet_downloader/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imgnet_downloader/classes_in_imagenet.csv" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/classes_in_imagenet.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imgnet_downloader/downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/downloader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imgnet_downloader/imagenet_class_info.json" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/imagenet_class_info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imgnet_downloader/prepare_stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/prepare_stats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imgnet_downloader/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imgnet_downloader/words.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/words.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots_LeNet_6epochs_lre-001_6tasks.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/savedump/plots_LeNet_6epochs_lre-001_6tasks.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots_ResNet101_15epochs_lre-001_6tasks.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/savedump/plots_ResNet101_15epochs_lre-001_6tasks.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plotting_metrics_for_robust_features_in_tinyimgnet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/robust_features_for_cl.py" beforeDir="false" afterPath="$PROJECT_DIR$/robust_features_for_cl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tiny_imagenet_stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/tinyimgnet/tiny_imagenet_stats.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +36,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Robust-Features-in-CL" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1lyOSUicbIZPiWw1KgDSV05nuUy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -26,7 +47,19 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/dataset_management/imgnet_downloader" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\work\bit\robust-features-for-cl-master\dataset_management\imgnet_downloader" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\work\bit\robust-features-for-cl-master\savedump" />
+      <recent name="G:\work\bit\robust-features-for-cl-master\dataset_management\tinyimgnet" />
+      <recent name="G:\work\bit\robust-features-for-cl-master\dataset_management" />
+      <recent name="G:\work\bit\robust-features-for-cl-master" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.robust_features_for_cl">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -62,7 +95,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/datasets.py" />
+      <option name="SCRIPT_NAME" value="G:\work\bit\robust-features-for-cl-master\dataset_management\tinyimgnet\datasets.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -111,6 +144,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="294" y="179" width="1092" height="707" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1608645762927" />
+    <state x="487" y="327" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608706389392">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="487" y="327" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1608706389392" />
     <state x="559" y="151" key="#datasets" timestamp="1608572825520">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -123,25 +160,29 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="619" y="279" key="FileChooserDialogImpl/0.0.1680.1050@0.0.1680.1050" timestamp="1608577120943" />
-    <state width="829" height="285" key="GridCell.Tab.0.bottom" timestamp="1608662207373">
+    <state width="829" height="285" key="GridCell.Tab.0.bottom" timestamp="1608715013953">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="829" height="285" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1608662207373" />
-    <state width="829" height="285" key="GridCell.Tab.0.center" timestamp="1608662207373">
+    <state width="829" height="285" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1608715013953" />
+    <state width="829" height="285" key="GridCell.Tab.0.center" timestamp="1608715013953">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="829" height="285" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1608662207373" />
-    <state width="829" height="285" key="GridCell.Tab.0.left" timestamp="1608662207372">
+    <state width="829" height="285" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1608715013953" />
+    <state width="829" height="285" key="GridCell.Tab.0.left" timestamp="1608715013953">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="829" height="285" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1608662207372" />
-    <state width="829" height="285" key="GridCell.Tab.0.right" timestamp="1608662207373">
+    <state width="829" height="285" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1608715013953" />
+    <state width="829" height="285" key="GridCell.Tab.0.right" timestamp="1608715013953">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="829" height="285" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1608662207373" />
+    <state width="829" height="285" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1608715013953" />
     <state x="341" y="167" width="1238" height="793" key="SettingsEditor" timestamp="1608662301445">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="167" width="1238" height="793" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1608662301445" />
+    <state x="649" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608713975032">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="649" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1608713975032" />
   </component>
 </project>
