@@ -98,6 +98,7 @@ def plot_accuracies_for_model(all_metrics, model_type, no_tasks = None, save_to 
   fig = plt.figure()
   print("got here")
   axes = [plt.axes([task/no_tasks, (task+1)/no_tasks, (no_tasks-task)/no_tasks , 1/no_tasks]) for task in range(no_tasks)] #dims are [left, bottom, width, height]
+  print(f"There are {len(axes)} axes to plot.")
   accuracies = []
   for reconstr_task_no in range(no_tasks):
     accuracies.append([])
@@ -105,8 +106,8 @@ def plot_accuracies_for_model(all_metrics, model_type, no_tasks = None, save_to 
       """
       to reconstruct the task accuracy, look at each task and pick the appropriate accuracy, then append it to the reconstructed acc
       """
-      print(task_no)
       accuracies[-1] += all_metrics[task_no]['test_acc'][reconstr_task_no]
+    print(f"setting axes for task {reconstr_task_no}")
     axes[reconstr_task_no].plot(accuracies[-1], c='b', label = model_type)
     axes[reconstr_task_no].set_title(f"Task {reconstr_task_no} evolution.")
 
@@ -114,7 +115,8 @@ def plot_accuracies_for_model(all_metrics, model_type, no_tasks = None, save_to 
   fig.set_figheight(10)
   fig.set_figwidth(10)
   fig.tight_layout()
-  fig.show()
+  plt.show()
+  plt.subplots_adjust(hspace = 0.05, top = 0.1, bottom = 0.1)
   pp = PdfPages(save_to)
   pp.savefig()
   pp.close()

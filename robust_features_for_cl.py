@@ -248,14 +248,14 @@ def train_datasets(model, trainer, datasets, save_on_the_way = True, save_append
                                  lr = hyperparams['learning_rate'], weight_decay = hyperparams['weight_decay'])
   return metrics
 
-metrics = train_datasets(model, trainer, datasets, save_on_the_way = True, save_appendix = "", start_from_task = 1)
-with open(basepath+'savedump/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics', 'wb') as filehandle:
-      pickle.dump(metrics, filehandle)
+# metrics = train_datasets(model, trainer, datasets, save_on_the_way = True, save_appendix = "", start_from_task = 1)
+# with open(basepath+'savedump/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics', 'wb') as filehandle:
+#       pickle.dump(metrics, filehandle)
 
 """Training on baseline dataset"""
 
 #@title Train on baseline (reinitialise model if it was already trained on nonbaseline tasks)
-reinitialise_model = False #@param {type:"boolean"}
+reinitialise_model = True #@param {type:"boolean"}
 if reinitialise_model:
   model = get_model(model_type)
 #MODEL & TRAINER MUST BE REINITIALISED IF ALREADY TRAINED ON GOOD TASKS

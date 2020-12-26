@@ -55,7 +55,7 @@ if args.use_class_list == True:
    for item in args.class_list:
        classes_to_scrape.append(item)
        if item not in class_info_dict:
-           logging.error(f'Class {item} not found in ImageNete')
+           logging.error(f'Class {item} not found in ImageNet')
            exit()
 
 elif args.use_class_list == False:
