@@ -68,7 +68,7 @@ for task_no in range(cl_dset['meta']['task_no']):
   im, label = dset_task[0]
   if task_no == 0:
     print(f"We have images of shape {im.shape}")
-  show_dataset_task_sample = True
+  show_dataset_task_sample = False
   if show_dataset_task_sample:
     #(task loaded, showing 10 imgs from task)
     print(f"\n\n Showing 10 images from the dataset of task {task_no}.")
@@ -198,7 +198,7 @@ if get_back:
 #auxiliary
 
 hyperparams = {
-    "batch_size": 5, #1500 batches for dataset of 7500
+    "batch_size": 2, #1500 batches for dataset of 7500
     "num_epochs": 25,
     "learning_algo": "adam",
     "learning_rate": 1e-3,
@@ -220,13 +220,13 @@ each a list of lists:
 for task i, the list contains all losses on the previous tasks including the current one for each epoch.
 """
 
-def train_datasets(model, trainer, datasets, save_on_the_way = True, save_appendix = "", start_from_task = 0):
+def train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, save_appendix = "", start_from_task = 0):
   metrics = list()
   train_loaders, test_loaders = [], []
   for task_no in range(len(datasets)):
     dset_task = datasets[task_no]
     #split dataset for this task
-    train_dset_task, test_dset_task = torch.utils.data.random_split(dset_task, [int(len(dset_task)*0.8),int(len(dset_task)*0.2)])
+    train_dset_task, test_dset_task = torch.utils.data.random_split(dset_task,[int(len(dset_task)*0.8),len(dset_task) - int(len(dset_task)*0.8)])
 
     #add data loaders corresponding to current task
     train_loaders.append(torch.utils.data.DataLoader(train_dset_task, batch_size=trainer.batch_size, shuffle=True, drop_last=False))
@@ -238,10 +238,12 @@ def train_datasets(model, trainer, datasets, save_on_the_way = True, save_append
         metrics.append(trainer.train(train_loaders, test_loaders))
     if save_on_the_way and task_no >= start_from_task:
       import pickle
-      with open(basepath+'savedump'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_metrics_task_'+str(task_no)+save_appendix, 'wb') as filehandle:
+      with open(os.path.join(basepath, 'savedump',
+                f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_metrics_task_{str(task_no)+save_appendix}"), 'wb') as filehandle:
         pickle.dump(metrics[-1], filehandle)
       torch.save(model.state_dict(), 
-                basepath+'savedump'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_model_after_task'+str(task_no)+save_appendix)
+                os.path.join(basepath,'savedump',
+                f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_model_after_task{str(task_no)}{save_appendix}") )
     # plot_metrics(metrics[task_no], title = f"Task {task_no} metrics after {trainer.num_epochs} epochs with learning rate {trainer.lr} for model {model.__class__.__name__}.")
     #RESETTING OPTIMIZER FOR BEGINNING OF NEW TASK
     if hyperparams['learning_algo'] == 'adam':
@@ -253,8 +255,9 @@ def train_datasets(model, trainer, datasets, save_on_the_way = True, save_append
   return metrics
 
 if True:
-    metrics = train_datasets(model, trainer, datasets, save_on_the_way = False, save_appendix = "", start_from_task = 7)
-    with open(basepath+'savedump/'+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics', 'wb') as filehandle:
+    metrics = train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, save_appendix = "_imagenet", start_from_task = 0)
+    with open(os.path.join(basepath,'savedump',
+        f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_imagenet"), 'wb') as filehandle:
           pickle.dump(metrics, filehandle)
 
     """Training on baseline dataset"""
@@ -264,8 +267,10 @@ if True:
     if reinitialise_model:
       model = get_model(model_type)
     #MODEL & TRAINER MUST BE REINITIALISED IF ALREADY TRAINED ON GOOD TASKS
-    metrics_baseline = train_datasets(model, trainer, baseline_datasets, save_on_the_way = True, save_appendix = "_baseline")
-    with open(basepath+"savedump/"+model.__class__.__name__+'_'+str(trainer.num_epochs)+'_epochs'+'_lr'+str(trainer.lr)+'_overall_metrics'+"_baseline", 'wb') as filehandle:
+    metrics_baseline = train_datasets(model, trainer, basepath, baseline_datasets, save_on_the_way = True, save_appendix = "_baseline_imagenet")
+    with open(os.path.join(basepath, "savedump",
+                           f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_baseline")
+            , 'wb') as filehandle:
           pickle.dump(metrics_baseline, filehandle)
 
     """Training on big dataset"""

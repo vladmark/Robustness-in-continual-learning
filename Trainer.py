@@ -70,7 +70,7 @@ class Trainer:
         epoch_acc /= (batch_num + 1)
         return epoch_loss, epoch_acc
 
-    def test_epoch(self, test_loader) -> float:
+    def test_epoch(self, test_loader) -> (float,float):
         """ Compute the loss on the test set
         :param
         epoch_num: number of current epoch
@@ -149,15 +149,29 @@ class Trainer:
 
                 #REVISIT PREVIOUS TASKS
                 if len(train_loaders) > 1:
-                  for task_no in range(len(train_loaders)-1):
-                    train_loader, test_loader = train_loaders[task_no], test_loaders[task_no]
-                    epoch_train_loss, epoch_train_acc = self.test_epoch(train_loader)
-                    epoch_test_loss, epoch_test_acc = self.test_epoch(test_loader)
-                    train_losses[task_no].append(epoch_train_loss)
-                    test_losses[task_no].append(epoch_test_loss)
-                    train_acc[task_no].append(epoch_train_acc)
-                    test_acc[task_no].append(epoch_test_acc)
+                  for prev_task_no in range(len(train_loaders)-1):
+                    train_loader, test_loader = train_loaders[prev_task_no], test_loaders[prev_task_no]
+                    prev_epoch_train_loss, prev_epoch_train_acc = self.test_epoch(train_loader)
+                    prev_epoch_test_loss, prev_epoch_test_acc = self.test_epoch(test_loader)
+                    train_losses[prev_task_no].append(prev_epoch_train_loss)
+                    test_losses[prev_task_no].append(prev_epoch_test_loss)
+                    train_acc[prev_task_no].append(prev_epoch_train_acc)
+                    test_acc[prev_task_no].append(prev_epoch_test_acc)
 
+
+                #SAVE
+                metrics_save = {"train_losses": train_losses,
+                                    "test_losses": test_losses,
+                                    "train_acc": train_acc,
+                                    "test_acc": test_acc}
+                import pickle
+                with open(os.path.join(basepath, 'savedump',
+                                       f"{model.__class__.__name__}_{epoch}_epochs_metrics_task_{str(task_no) + save_appendix}"),
+                          'wb') as filehandle:
+                    pickle.dump(metrics_save, filehandle)
+                torch.save(model.state_dict(),
+                           os.path.join(basepath, 'savedump',
+                                        f"{self.model.__class__.__name__}_{epoch}_epochs_model_after_task{str(task_no)}{save_appendix}"))
                 #DO PRINTS AND PLOTS
                 if False:
                     if epoch % 3 == 0 and epoch > 0:

@@ -20,14 +20,14 @@ from collections import defaultdict
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib import gridspec
 
-def obtain_metrics(path: str, no_tasks = 6, big_dataset = False):
+def obtain_metrics(path: str, no_tasks = 6, suffix = '', big_dataset = False):
   all_metrics = {}
   for task in ( ["whole_dataset"] if big_dataset else [] ) + list(range(no_tasks)):
     if task == "whole_dataset":
-      with open(path+'_metrics_big_dset', 'rb') as filehandle:
+      with open(os.path.join(path,'_metrics_big_dset'+suffix), 'rb') as filehandle:
         all_metrics[task] = pickle.load(filehandle)
     else:
-      with open(path+'_metrics_task_'+str(task), 'rb') as filehandle:
+      with open(os.path.join(path,'_metrics_task_'+str(task)+suffix), 'rb') as filehandle:
         all_metrics[task] = pickle.load(filehandle)
   return all_metrics
 
@@ -45,7 +45,7 @@ def plot_in_a_subplot(subplot, metrics: dict, legend = False, title="Losses for 
       subplot.set_xlabel('Epoch')
       subplot.legend()
 
-def plot_metrics_for_model (all_metrics: dict, model_type: str, save_to = None):
+def plot_metrics(all_metrics: dict, model_type: str, save_to = None):
   # Create a Figure
   fig = plt.figure()
   # Set up Axes
@@ -85,9 +85,9 @@ def plot_metrics_for_model (all_metrics: dict, model_type: str, save_to = None):
     pp.savefig()
     pp.close()
 
-def plot_accuracies_for_model(all_metrics, model_type, no_tasks = None, save_to = None, basepath = "./"):
+def plot_accuracies(all_metrics, model_type, no_tasks = None, save_to = None, basepath = ""):
   if save_to == None:
-    save_to = basepath+"/savedump/"+"acc_plots"+model_type+".pdf"
+    save_to = os.path.join(basepath, "savedump", "acc_plots"+model_type+".pdf")
   if no_tasks == None:
     no_tasks = len(all_metrics.keys())
   """
@@ -97,7 +97,7 @@ def plot_accuracies_for_model(all_metrics, model_type, no_tasks = None, save_to 
   """
   fig = plt.figure()
   print("got here")
-  axes = [plt.axes([task/no_tasks, (task+1)/no_tasks, (no_tasks-task)/no_tasks , 1/no_tasks]) for task in range(no_tasks)] #dims are [left, bottom, width, height]
+  axes = [plt.axes([task/no_tasks, (no_tasks - (task+1))/no_tasks, (no_tasks-task)/no_tasks , 1/no_tasks]) for task in range(no_tasks)] #dims are [left, bottom, width, height]
   print(f"There are {len(axes)} axes to plot.")
   accuracies = []
   for reconstr_task_no in range(no_tasks):
@@ -116,7 +116,7 @@ def plot_accuracies_for_model(all_metrics, model_type, no_tasks = None, save_to 
   fig.set_figwidth(10)
   fig.tight_layout()
   plt.show()
-  plt.subplots_adjust(hspace = 0.05, top = 0.1, bottom = 0.1)
+  # plt.subplots_adjust(hspace = 0.05, top = 0.1, bottom = 0.1)
   pp = PdfPages(save_to)
   pp.savefig()
   pp.close()
