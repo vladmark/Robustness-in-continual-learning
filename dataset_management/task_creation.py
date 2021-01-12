@@ -252,10 +252,12 @@ def dump_dataset(dfsl, k, path, cls_no, misc_no, task_no, superclasses):
             row = [supercls] + list(dfsl.get_leafs(supercls))
             f.write(",".join(row) + "\n")
 
-def tiny_imagenet_stats(basepath):
+def select_tasks(datapath, analyse_image_counts = False):
     _, c2p = consolidate_parents(*get_hierarchy(basepath))
-    wnids = [r.rstrip() for r in open(basepath+"/data/tiny-imagenet-200/wnids.txt", "r")]
-    words_file = open(basepath+"/data/tiny-imagenet-200/words.txt", "r")
+    # wnids = [r.rstrip() for r in open(basepath+"/data/tiny-imagenet-200/wnids.txt", "r")]
+    # words_file = open(basepath+"/data/tiny-imagenet-200/words.txt", "r")
+    wnids = [cls_id for cls_id in os.listdir(datapath+"train") if os.path.isdir(os.path.join(datapath+"train", cls_id))]
+    words_file = open(datapath+"words.txt", "r")
     wnid2words = {r[0]: r[1] for r in csv.reader(words_file, delimiter="\t")}
     # words2wnid = {r[1]: r[0] for r in csv.reader(words_file, delimiter="\t")}
 
