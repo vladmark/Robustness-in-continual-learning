@@ -21,7 +21,8 @@ else:
 
 print(f"Working on device: {device}.")
 
-datapath = os.path.join("data", "imagenet")
+dataset_name = "tiny-imagenet-200"
+datapath = os.path.join("data", dataset_name)
 basepath = os.path.join("")
 
 """Imgnet premade downloader: https://towardsdatascience.com/how-to-scrape-the-imagenet-f309e02de1f4"""
@@ -39,7 +40,8 @@ from dataset_management.dataset_creation import TinyImagenetTask
 
 
 """### Getting the datasets"""
-cl_dset = get_cl_dset(os.path.join(datapath, "cl_t7_c21.txt"))
+# cl_dset = get_cl_dset(os.path.join(datapath, "cl_t7_c21.txt"))
+cl_dset = get_cl_dset(os.path.join(datapath, "cl_t5_c15.txt"))
 """
 cl_dset: a dictionary containing
         -> key 'meta': dict with keys: cls_no (classes per task), task_no (# of tasks), misc (number of misc classes)
@@ -55,7 +57,7 @@ for task_no in range(cl_dset['meta']['task_no']):
   dset_task = TinyImagenetTask(os.path.join(datapath, "train"), task,
                         transform = torchvision.transforms.Compose([
                             torchvision.transforms.ToTensor(),
-                            torchvision.transforms.Resize((500,500)),
+                            torchvision.transforms.Resize((30,30)),
                             torchvision.transforms.RandomHorizontalFlip(p=0.5),
                             torchvision.transforms.RandomVerticalFlip(p=0.5),
                             torchvision.transforms.RandomRotation((-90,90)), #min and max degrees
@@ -197,18 +199,19 @@ if get_back:
 
 #auxiliary
 
-hyperparams = {
-    "batch_size": 2, #1500 batches for dataset of 7500
+trainer_params = {
+    "batch_size": 5, #1500 batches for dataset of 7500
     "num_epochs": 25,
     "learning_algo": "adam",
     "learning_rate": 1e-3,
     "weight_decay": 1e-5,
-    "device": device
+    "device": device,
+    "basepath": basepath
 }
 
 from Trainer import Trainer
 
-trainer = Trainer(model, hyperparams)
+trainer = Trainer(model, trainer_params)
 
 """###Training for each task, all in a loop over tasks
 
@@ -224,6 +227,8 @@ def train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, s
   metrics = list()
   train_loaders, test_loaders = [], []
   for task_no in range(len(datasets)):
+    trainer.task_no = task_no
+    trainer.save_appendix = save_appendix
     dset_task = datasets[task_no]
     #split dataset for this task
     train_dset_task, test_dset_task = torch.utils.data.random_split(dset_task,[int(len(dset_task)*0.8),len(dset_task) - int(len(dset_task)*0.8)])
@@ -246,18 +251,18 @@ def train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, s
                 f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_model_after_task{str(task_no)}{save_appendix}") )
     # plot_metrics(metrics[task_no], title = f"Task {task_no} metrics after {trainer.num_epochs} epochs with learning rate {trainer.lr} for model {model.__class__.__name__}.")
     #RESETTING OPTIMIZER FOR BEGINNING OF NEW TASK
-    if hyperparams['learning_algo'] == 'adam':
+    if trainer_params['learning_algo'] == 'adam':
             trainer.optimizer = torch.optim.Adam(params = trainer.model.parameters(),
-                                  lr = hyperparams['learning_rate'], weight_decay = hyperparams['weight_decay'])
+                                  lr = trainer_params['learning_rate'], weight_decay = trainer_params['weight_decay'])
     else:
             trainer.optimizer = torch.optim.SGD(params = trainer.model.parameters(), 
-                                 lr = hyperparams['learning_rate'], weight_decay = hyperparams['weight_decay'])
+                                 lr = trainer_params['learning_rate'], weight_decay = trainer_params['weight_decay'])
   return metrics
 
 if True:
-    metrics = train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, save_appendix = "_imagenet", start_from_task = 0)
+    metrics = train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, save_appendix = f"_{dataset_name}", start_from_task = 0)
     with open(os.path.join(basepath,'savedump',
-        f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_imagenet"), 'wb') as filehandle:
+        f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_{dataset_name}"), 'wb') as filehandle:
           pickle.dump(metrics, filehandle)
 
     """Training on baseline dataset"""
@@ -267,9 +272,9 @@ if True:
     if reinitialise_model:
       model = get_model(model_type)
     #MODEL & TRAINER MUST BE REINITIALISED IF ALREADY TRAINED ON GOOD TASKS
-    metrics_baseline = train_datasets(model, trainer, basepath, baseline_datasets, save_on_the_way = True, save_appendix = "_baseline_imagenet")
+    metrics_baseline = train_datasets(model, trainer, basepath, baseline_datasets, save_on_the_way = True, save_appendix = f"_baseline_{dataset_name}")
     with open(os.path.join(basepath, "savedump",
-                           f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_baseline")
+                           f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_baseline_{dataset_name}")
             , 'wb') as filehandle:
           pickle.dump(metrics_baseline, filehandle)
 

@@ -1,10 +1,10 @@
 from collections import defaultdict
 import csv
+import os
 
 
 ## **Tiny Imagenet Stats**
-basepath = "."
-def get_hierarchy(basepath):
+def get_hierarchy(datapath):
     """ Each line in `is_a.txt` is a parent -> child relation.
         Parsed 75850 rows.
         parents:   75850 ->  16693 unique.
@@ -12,7 +12,7 @@ def get_hierarchy(basepath):
     """
     p2c = defaultdict(list)
     c2p = defaultdict(list)
-    with open(basepath+"/data/tiny-imagenet-200/is_a.txt") as csv_file:
+    with open(os.path.join(datapath, "is_a.txt")) as csv_file:
         for row_cnt, row in enumerate(csv.reader(csv_file, delimiter=" ")):
             #row is a (0,2)-vector; pos 0: parent ; pos 1: child
             p2c[row[0]].append(row[1])
@@ -40,10 +40,10 @@ def consolidate_parents(p2c, c2p):
     print(f"consolidated p2c (only parents with maximal # leaves kept): {len(p2c_)} parents.")
     print(f"consolidated c2p (only parents with maximal # leaves kept): {len(c2p_)} children.")
     return p2c_, c2p_
-
-p2c_, c2p_ = consolidate_parents(*get_hierarchy(basepath))
-print(f"new p2c: {len(p2c_)} parents.")
-print(f"new c2p: {len(c2p_)} children.")
+#
+# p2c_, c2p_ = consolidate_parents(*get_hierarchy(basepath))
+# print(f"new p2c: {len(p2c_)} parents.")
+# print(f"new c2p: {len(c2p_)} children.")
 
 """Id's in wnids are **some** (amounting to 200), but not all, ids of terminal leaves in the imgnet tree."""
 
@@ -245,19 +245,25 @@ def dump_dataset(dfsl, k, path, cls_no, misc_no, task_no, superclasses):
         superclass. So not just N wnids where N is the no of tasks but all of
         them.
     """
-    file_name = path+f"cl_t{task_no}_c{cls_no}.txt"
+    file_name = os.path.join(path, f"cl_t{task_no}_c{cls_no}.txt")
     with open(file_name, "w+") as f:
         f.write(",".join([str(x) for x in [cls_no, misc_no, task_no]]) + "\n")
         for supercls in superclasses:
             row = [supercls] + list(dfsl.get_leafs(supercls))
             f.write(",".join(row) + "\n")
 
-def select_tasks(datapath, analyse_image_counts = False):
-    _, c2p = consolidate_parents(*get_hierarchy(basepath))
+def construct_tasks(datapath, min_imgs = 1, max_imgs = 1000):
+    _, c2p = consolidate_parents(*get_hierarchy(datapath))
     # wnids = [r.rstrip() for r in open(basepath+"/data/tiny-imagenet-200/wnids.txt", "r")]
     # words_file = open(basepath+"/data/tiny-imagenet-200/words.txt", "r")
-    wnids = [cls_id for cls_id in os.listdir(datapath+"train") if os.path.isdir(os.path.join(datapath+"train", cls_id))]
-    words_file = open(datapath+"words.txt", "r")
+    wnids = []
+    for cls_id in os.listdir(os.path.join(datapath,"train")):
+        if os.path.isdir(os.path.join(datapath,"train", cls_id)):
+            class_imgs = len([img for img in os.listdir(os.path.join(datapath, "train", f"{cls_id}"))])
+            if class_imgs <= max_imgs and class_imgs >= min_imgs:
+                wnids.append(cls_id)
+
+    words_file = open(os.path.join(datapath,"words.txt"), "r")
     wnid2words = {r[0]: r[1] for r in csv.reader(words_file, delimiter="\t")}
     # words2wnid = {r[1]: r[0] for r in csv.reader(words_file, delimiter="\t")}
 
@@ -311,7 +317,7 @@ def select_tasks(datapath, analyse_image_counts = False):
         # count how many leafs (instances) each superclass has
         instance_no = [dfsl.get_leaf_no(sc) for sc in superclasses]
         # compute how many uncategorized classes are left
-        leftovers = 200 - sum(instance_no)
+        leftovers = len(wnids) - sum(instance_no)
         # compute how many miscelaneous or random classes we can create
         class_no, task_no = len(superclasses), min(instance_no)
         misc_no = leftovers // task_no
@@ -337,12 +343,12 @@ def select_tasks(datapath, analyse_image_counts = False):
                 print(f"  |  [{leaf}] {wnid2words[leaf]}")
 
     for k, values in picked.items():
-        dump_dataset(dfsl, k, basepath+"/", *values)
+        dump_dataset(dfsl, k, datapath, *values)
 
 
 def test():
     digraph = DirectedGraph()
-    with open("../../test/tree_test.conf", "r") as f:
+    with open("../test/tree_test.conf", "r") as f:
         rows = csv.reader(f, delimiter=" ")
         V, E = next(rows), next(rows)
         for (v, w) in rows:

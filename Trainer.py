@@ -1,6 +1,7 @@
 """"###Trainer class """
 import torch
 import matplotlib.pyplot as plt
+import os
 
 def plot_metrics(metrics: dict, task_no = -1, title="Losses for given task"):
     """
@@ -32,6 +33,9 @@ class Trainer:
         self.num_epochs = hyperparams['num_epochs']
         self.lr = hyperparams['learning_rate']
         self.batch_size = hyperparams['batch_size']
+        self.basepath = hyperparams['basepath']
+        self.save_appendix = ""
+        self.task_no = 0
 
     def train_epoch(self, train_loader, epoch_num: int) -> float:
         """
@@ -165,13 +169,13 @@ class Trainer:
                                     "train_acc": train_acc,
                                     "test_acc": test_acc}
                 import pickle
-                with open(os.path.join(basepath, 'savedump',
-                                       f"{model.__class__.__name__}_{epoch}_epochs_metrics_task_{str(task_no) + save_appendix}"),
+                with open(os.path.join(self.basepath, 'savedump',
+                                       f"{self.model.__class__.__name__}_{epoch}_epochs_metrics_task_{str(self.task_no)+self.save_appendix}"),
                           'wb') as filehandle:
                     pickle.dump(metrics_save, filehandle)
-                torch.save(model.state_dict(),
-                           os.path.join(basepath, 'savedump',
-                                        f"{self.model.__class__.__name__}_{epoch}_epochs_model_after_task{str(task_no)}{save_appendix}"))
+                torch.save(self.model.state_dict(),
+                           os.path.join(self.basepath, 'savedump',
+                                        f"{self.model.__class__.__name__}_{epoch}_epochs_model_after_task{str(self.task_no)}{self.save_appendix}"))
                 #DO PRINTS AND PLOTS
                 if False:
                     if epoch % 3 == 0 and epoch > 0:

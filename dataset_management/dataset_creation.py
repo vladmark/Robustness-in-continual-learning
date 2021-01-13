@@ -20,7 +20,7 @@ def get_cl_dset(fp):
     return cl_dset
 
 
-def get_task(cl_dset, task_id, basepath, verbose=True):
+def get_task(cl_dset, task_id, datapath, verbose=True):
     """
         cl_dset: a
         dictionary
@@ -43,7 +43,7 @@ def get_task(cl_dset, task_id, basepath, verbose=True):
     wnid2words = {
         r[0]: r[1]
         for r in csv.reader(
-            open(basepath+"/data/tiny-imagenet-200/words.txt", "r"), delimiter="\t"
+            open(os.path.join(datapath, "words.txt"), "r"), delimiter="\t"
         )
     }
 
