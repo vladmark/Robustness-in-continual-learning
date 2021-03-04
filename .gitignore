@@ -3,6 +3,7 @@
 **/train
 **/test
 **/val
+!(**/.txt)
 savedump/old/
 # Project
 data/*.zip
