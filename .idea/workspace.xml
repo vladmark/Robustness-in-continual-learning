@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e42feaa8-a304-4575-9812-0211c89926b2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset_management/imgnet_downloader/downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/imgnet_downloader/downloader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plotting_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotting_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robust_features_for_cl.py" beforeDir="false" afterPath="$PROJECT_DIR$/robust_features_for_cl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/savedump/ModDenseNet_25_epochs_lr0.001_metrics_task_1" beforeDir="false" afterPath="$PROJECT_DIR$/savedump/ModDenseNet_25_epochs_lr0.001_metrics_task_1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/savedump/acc_plotsResNet_15_epochs.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/savedump/acc_plotsResNet_15_epochs.pdf" afterDir="false" />
-    </list>
+    <list default="true" id="e42feaa8-a304-4575-9812-0211c89926b2" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,27 +17,36 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1lyOSUicbIZPiWw1KgDSV05nuUy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/dataset_management/imgnet_downloader" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\work\bit\robust-features-for-cl-master\dataset_management\imgnet_downloader" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\projects\Robust-Features-in-CL\data\tiny-imagenet-200" />
+      <recent name="C:\projects\robust-features-for-cl-master\dataset_management" />
+      <recent name="C:\projects\robust-features-for-cl-master\data" />
+      <recent name="C:\projects\robust-features-for-cl-master\savedump" />
       <recent name="G:\work\bit\robust-features-for-cl-master\savedump" />
-      <recent name="G:\work\bit\robust-features-for-cl-master\dataset_management\tinyimgnet" />
-      <recent name="G:\work\bit\robust-features-for-cl-master\dataset_management" />
-      <recent name="G:\work\bit\robust-features-for-cl-master" />
     </key>
   </component>
   <component name="RunManager" selected="Python.robust_features_for_cl">
@@ -112,6 +114,7 @@
       <method v="2" />
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -125,50 +128,16 @@
     </task>
     <servers />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="294" y="179" width="1092" height="707" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608645762927">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="294" y="179" width="1092" height="707" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1608645762927" />
-    <state x="487" y="327" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608723203234">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="487" y="327" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1608723203234" />
-    <state x="559" y="151" key="#datasets" timestamp="1608572825520">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="559" y="151" key="#datasets/0.0.1680.1050@0.0.1680.1050" timestamp="1608572825520" />
-    <state x="559" y="151" key="#robust_features_for_cl" timestamp="1608572848353">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="559" y="151" key="#robust_features_for_cl/0.0.1680.1050@0.0.1680.1050" timestamp="1608572848353" />
-    <state x="619" y="279" key="FileChooserDialogImpl" timestamp="1608577120943">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="619" y="279" key="FileChooserDialogImpl/0.0.1680.1050@0.0.1680.1050" timestamp="1608577120943" />
-    <state width="829" height="285" key="GridCell.Tab.0.bottom" timestamp="1608915254581">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="829" height="285" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1608915254581" />
-    <state width="829" height="285" key="GridCell.Tab.0.center" timestamp="1608915254581">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="829" height="285" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1608915254581" />
-    <state width="829" height="285" key="GridCell.Tab.0.left" timestamp="1608915254581">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="829" height="285" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1608915254581" />
-    <state width="829" height="285" key="GridCell.Tab.0.right" timestamp="1608915254581">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="829" height="285" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1608915254581" />
-    <state x="341" y="167" width="1238" height="793" key="SettingsEditor" timestamp="1608724610435">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="341" y="167" width="1238" height="793" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1608724610435" />
-    <state x="649" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608713975032">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="649" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1608713975032" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

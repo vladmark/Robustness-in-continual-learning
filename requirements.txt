@@ -1,0 +1,26 @@
+certifi==2020.12.5
+cffi @ file:///C:/ci/cffi_1606255207413/work
+cycler==0.10.0
+joblib @ file:///tmp/build/80754af9/joblib_1607970656719/work
+kiwisolver @ file:///C:/ci/kiwisolver_1603996595157/work
+matplotlib @ file:///C:/ci/matplotlib-base_1603356257853/work
+mkl-fft==1.2.0
+mkl-random==1.0.4
+mkl-service==2.3.0
+numpy @ file:///C:/ci/numpy_and_numpy_base_1603468620949/work
+olefile==0.46
+pickle-mixin==1.0.2
+Pillow @ file:///C:/ci/pillow_1603821929285/work
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pyparsing==2.4.7
+python-dateutil==2.8.1
+scikit-learn @ file:///C:/ci/scikit-learn_1598376983131/work
+scipy @ file:///C:/ci/scipy_1597686737426/work
+six @ file:///C:/ci/six_1605205426665/work
+threadpoolctl @ file:///tmp/tmp9twdgx9k/threadpoolctl-2.1.0-py3-none-any.whl
+torch==1.7.1
+torchaudio==0.7.2
+torchvision==0.8.2
+tornado @ file:///C:/ci/tornado_1606935947090/work
+typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1598376058250/work
+wincertstore==0.2

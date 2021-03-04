@@ -186,7 +186,7 @@ class ModDenseNet(nn.Module):
             - b = ([(h-k)/s]+1) x ([(w-k)/s]+1) i.e. how many kernels of given shape, also taking into account stride (and also padding etc. but assumed padding = 0) "fit into" spacial region
             """
             n, c, h, w = x.size()
-            unfolded_x = torch.nn.functional.unfold(x, kernel_size=block_size, stride=block_size)
+            unfolded_x = torch.nn.functional.unfold(x, kernel_size = block_size, stride = block_size)
             unfolded_x = unfolded_x.view(n, c * block_size ** 2, h // block_size, w // block_size)
             return unfolded_x
 

@@ -1,3 +1,9 @@
+
+**/*.jpg
+**/train
+**/test
+**/val
+savedump/old/
 # Project
 data/*.zip
 data/tiny-imagenet-200/**/*

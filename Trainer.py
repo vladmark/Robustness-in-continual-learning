@@ -36,8 +36,41 @@ class Trainer:
         self.basepath = hyperparams['basepath']
         self.save_appendix = ""
         self.task_no = 0
+        self.save_interm = True
 
-    def train_epoch(self, train_loader, epoch_num: int) -> float:
+    def save(self):
+        self.save_interm = True
+        return
+
+    def toggle_save(self):
+        self.save_interm = not self.save_interm
+        return
+
+    def nosave(self):
+        self.save_interm = False
+
+    def set_saveloc(self, save_appendix):
+        self.save_appendix = save_appendix
+        return
+
+    def set_task(self, task_no):
+        self.task_no = task_no
+
+    def save_metrics(self, metrics, epoch):
+        import pickle
+        with open(os.path.join(self.basepath, 'savedump',
+                               f"{self.model.__class__.__name__}_{epoch}_epochs_metrics_task_{str(self.task_no) + self.save_appendix}"),
+                  'wb') as filehandle:
+            pickle.dump(metrics, filehandle)
+        return
+
+    def save_model(self, epoch):
+        torch.save(self.model.state_dict(),
+                   os.path.join(self.basepath, 'savedump',
+                                f"{self.model.__class__.__name__}_{epoch}_epochs_model_after_task{str(self.task_no)}{self.save_appendix}"))
+        return
+
+    def train_epoch(self, train_loader, epoch_num: int, prev_fisher = None, prev_params = None, compute_new_fisher = False) -> float:
         """
             Compute the loss on the training set
             :param
@@ -47,18 +80,83 @@ class Trainer:
         epoch_loss = 0.0
         epoch_acc = 0.0
         loss = torch.nn.CrossEntropyLoss()
+        fisher_diag = None
         for batch_num, (batch_imgs, batch_labels) in enumerate(train_loader):
+            params = None
             batch_imgs, batch_labels = batch_imgs.to(self.device), batch_labels.to(self.device)
             # reset gradients
+
+            if compute_new_fisher:
+                fisher_list = None
+                batch_probs = torch.log(torch.nn.functional.softmax(batch_logits, dim=1))
+                for sample_idx in range(batch_probs.shape[0]):
+                    for label_idx in range(batch_probs.shape[-1]):
+                        self.optimizer.zero_grad()
+                        grads = torch.autograd.grad(batch_probs[sample_idx, label_idx], self.model.parameters(),
+                                                    create_graph=True)
+                        print(f"When calculating new fisher matrix, batch_grad of prob for sample {sample_idx} label {label_idx} is {grads[0]}")
+                        if fisher_list is None:
+                            fisher_list = list()
+                            ###ADD A DETACH
+                            for idx in range(len(grads)):
+                                fisher_list.append(torch.pow(grads[idx], 2))
+                        else:
+                            for idx in range(len(grads)):
+                                fisher_list[idx] += torch.pow(grads[idx], 2)
+                    for idx in range(len(batch_grads)):
+                        fisher_list[idx] /= batch_probs.shape[-1]
+                for idx in range(len(batch_grads)):
+                    fisher_list[idx] /= batch_probs.shape[0]
+                """
+                probs_grads is a tuple of gradients of each network component; 
+                we need to take each element of this tuple and concatenate them in a loong tensor
+                """
+                for grad in fisher_list:
+                    if fisher_diag is None:
+                        fisher_diag = grad.view([1, -1])
+                    else:
+                        fisher_diag= torch.cat((fisher_diag, grad.view([1,-1])) , dim = 1 ) #will add to columns
+                fisher_list = None
+
             self.optimizer.zero_grad()
             batch_logits=self.model(batch_imgs)
-            # if batch_num % 100 == 0:
-            #   print(f"batch {batch_num} first 5 logits: {batch_logits[:5]}")
-            #   print(f"batch {batch_num} first 5 labels: {batch_labels[:5]}")
-            # print(f"predicted labels {torch.argmax(batch_logits, dim=1)}")
             batch_loss = loss(batch_logits, batch_labels)
+            """
+            even if we use previous fisher we still need the bare batch loss to compute new fisher
+            because the new fisher is supposed to reflect only the new dataset, so the previous fisher shouldn't interfere.
+            """
+            batch_loss_corrected = batch_loss
+            if prev_fisher is not None and prev_params is not None:
+                params = None
+                for param in self.model.parameters():
+                    if params is None:
+                        params = param.view([1, -1])
+                    else:
+                        params = torch.cat((params, param.view([1, -1])), dim=1)  # will add to columns
+
+                batch_loss_corrected = batch_loss + torch.dot(prev_fisher, torch.pow(params-prev_params, 2) )
+                print(f"regular batch loss is {batch_loss} and the corrected one is {batch_loss_corrected}")
+
             epoch_loss += batch_loss.item()
-            batch_loss.backward()
+
+            # COMPUTING FISHER DIAGONAL
+                # batch_onegrad = None
+                # for grad in batch_grads:
+                #     if batch_onegrad == None:
+                #         batch_onegrad = grad.view([1,-1])
+                #     else:
+                #         batch_onegrad = torch.cat((batch_onegrad, grad.view([1,-1])) , dim = 1 ) #will add to columns
+                # if fisher_diag == None:
+                #     fisher_diag = torch.pow(batch_onegrad, 2) / batch_logits.shape[0]
+                # else:
+                #     fisher_diag += torch.pow(batch_onegrad, 2) / batch_logits.shape[0]
+
+
+
+                # if batch_num == 0 :
+                print(f"fisher diag shape at batch {batch_num} of epoch {epoch_num}: {fisher_diag.shape}")
+
+            batch_loss_corrected.backward()
 
             # update parameters
             self.optimizer.step()
@@ -69,10 +167,10 @@ class Trainer:
 
             if batch_num % 100 == 0:
                 print(f"(epoch: {epoch_num}, batch: {batch_num + 1}), batch loss = {batch_loss.item()}")
-        print(f"epoch {epoch_num} has overall loss {epoch_loss}")
         epoch_loss /= (batch_num + 1)
         epoch_acc /= (batch_num + 1)
-        return epoch_loss, epoch_acc
+        print(f"epoch {epoch_num} has overall loss {epoch_loss}")
+        return epoch_loss, epoch_acc, fisher_diag
 
     def test_epoch(self, test_loader) -> (float,float):
         """ Compute the loss on the test set
@@ -107,7 +205,7 @@ class Trainer:
         score=f1_score(y_true=labels.cpu(), y_pred=predictions.cpu(), average='weighted')
         return(score)
 
-    def train(self, train_loaders, test_loaders) -> dict:
+    def train(self, train_loaders, test_loaders, prev_fisher = None, prev_params = None) -> dict:
         """
         Expects one or multiple train loaders corresponding to specific tasks in a list
         Assumes the last train loader & test loader correspond to current task and that we've done the training on previous tasks before.
@@ -116,25 +214,11 @@ class Trainer:
         train_loader, test_loader = train_loaders[-1], test_loaders[-1]
         train_losses, test_losses, train_acc, test_acc = [[] for i in range(len(train_loaders))], [[] for i in range(len(train_loaders))], [[] for i in range(len(train_loaders))], [[] for i in range(len(train_loaders))]
 
-        #TEST PLOTTING TEST PLOTTING
-        # for task_no in range(len(train_loaders)):
-        #     fig = plt.figure()
-        #     axes = fig.subplots(2, 5)
-        #     it = iter(train_loaders[task_no])
-        #     imgs, labels = next(it)
-        #     for i in range(10):
-        #         axes[i // 5, i % 5].set_title(f"label: {labels[i]}")
-        #         axes[i // 5, i % 5].imshow(imgs[i].permute(1,2,0))
-        #     fig.set_figheight(5)
-        #     fig.set_figwidth(5)
-        #     fig.suptitle(f"Train loader of task {task_no} corresponding to training on task {len(train_loaders)}")
-        #     fig.tight_layout()
-        #     fig.show()
-        # TEST PLOTTING TEST PLOTTING
         if True:
             for epoch in range(self.num_epochs):
                 print(f"learning rate at epoch {epoch}: {[g['lr'] for g in self.optimizer.param_groups]}")
-                epoch_train_loss, epoch_train_acc = self.train_epoch(train_loader, epoch)
+                epoch_train_loss, epoch_train_acc, fisher_diag = \
+                    self.train_epoch(train_loader, epoch, compute_new_fisher = True if epoch == self.num_epochs-1 else False, prev_fisher = prev_fisher, prev_params = prev_params)
                 epoch_test_loss, epoch_test_acc = self.test_epoch(test_loader)
                 train_losses[-1].append(epoch_train_loss)
                 test_losses[-1].append(epoch_test_loss)
@@ -164,18 +248,14 @@ class Trainer:
 
 
                 #SAVE
-                metrics_save = {"train_losses": train_losses,
-                                    "test_losses": test_losses,
-                                    "train_acc": train_acc,
-                                    "test_acc": test_acc}
-                import pickle
-                with open(os.path.join(self.basepath, 'savedump',
-                                       f"{self.model.__class__.__name__}_{epoch}_epochs_metrics_task_{str(self.task_no)+self.save_appendix}"),
-                          'wb') as filehandle:
-                    pickle.dump(metrics_save, filehandle)
-                torch.save(self.model.state_dict(),
-                           os.path.join(self.basepath, 'savedump',
-                                        f"{self.model.__class__.__name__}_{epoch}_epochs_model_after_task{str(self.task_no)}{self.save_appendix}"))
+                if self.save_interm:
+                    metrics_save = {"train_losses": train_losses,
+                                        "test_losses": test_losses,
+                                        "train_acc": train_acc,
+                                        "test_acc": test_acc}
+                    self.save_metrics(metrics_save, epoch)
+                    self.save_model(epoch)
+
                 #DO PRINTS AND PLOTS
                 if False:
                     if epoch % 3 == 0 and epoch > 0:
@@ -187,8 +267,8 @@ class Trainer:
                       if len(train_loaders) > 1:
                         for task_no in range(len(train_loaders)-1):
                           plot_metrics(metrics = interm_plot_metrics, task_no = task_no, title = f"Same as before, revisiting task {task_no}.")
-        print(f"On training task {len(train_loaders)} task 0 was retested on {len(train_losses[0])}")
+
         return {"train_losses": train_losses,
                 "test_losses": test_losses,
                 "train_acc": train_acc,
-                "test_acc": test_acc}
+                "test_acc": test_acc}, fisher_diag

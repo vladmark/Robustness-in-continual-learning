@@ -20,14 +20,14 @@ from collections import defaultdict
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib import gridspec
 
-def obtain_metrics(path: str, no_tasks = 6, suffix = '', big_dataset = False):
+def obtain_metrics(path: str, no_tasks = 6, suffix = '', prefix = '', big_dataset = False):
   all_metrics = {}
   for task in ( ["whole_dataset"] if big_dataset else [] ) + list(range(no_tasks)):
     if task == "whole_dataset":
       with open(os.path.join(path,'_metrics_big_dset'+suffix), 'rb') as filehandle:
         all_metrics[task] = pickle.load(filehandle)
     else:
-      with open(os.path.join(path,'_metrics_task_'+str(task)+suffix), 'rb') as filehandle:
+      with open(os.path.join(path,prefix+'_metrics_task_'+str(task)+suffix), 'rb') as filehandle:
         all_metrics[task] = pickle.load(filehandle)
   return all_metrics
 

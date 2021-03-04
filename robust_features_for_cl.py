@@ -29,122 +29,78 @@ basepath = os.path.join("")
 
 """https://medium.com/@staticmukesh/how-i-managed-to-delete-1-billions-files-from-my-google-drive-account-9fdc67e6aaca """
 
-# from dataset_management.task_creation import construct_tasks
-# construct_tasks(datapath, min_imgs = 450, max_imgs = 800)
+from dataset_management.task_creation import construct_tasks
+construct_tasks(datapath, min_imgs = 1500, max_imgs = 5000)
 
 """## **Datasets** """
 
-from dataset_management.dataset_creation import get_cl_dset
-from dataset_management.dataset_creation import get_task
 from dataset_management.dataset_creation import TinyImagenetTask
-
+from dataset_management.dataset_creation import get_cl_dset
 
 """### Getting the datasets"""
 # cl_dset = get_cl_dset(os.path.join(datapath, "cl_t7_c21.txt"))
-cl_dset = get_cl_dset(os.path.join(datapath, "cl_t5_c15.txt"))
+# cl_dset = get_cl_dset(os.path.join(datapath, "cl_t5_c15.txt"))
 """
 cl_dset: a dictionary containing
         -> key 'meta': dict with keys: cls_no (classes per task), task_no (# of tasks), misc (number of misc classes)
         -> other keys: the disjoint superclasses used in making of tasks (their number is the number of classes/task)
 """
+split_file_name = "cl_t7_c10.txt"
+cl_dset = get_cl_dset(os.path.join(datapath, split_file_name))
 
-datasets = list()
-all_classes = list()
-for task_no in range(cl_dset['meta']['task_no']):
-  print(f"Showing info for task {task_no}")
-  task = get_task(cl_dset, task_no, datapath, verbose = False) #list of classes corresponding to task
-  all_classes += task
-  dset_task = TinyImagenetTask(os.path.join(datapath, "train"), task,
-                        transform = torchvision.transforms.Compose([
-                            torchvision.transforms.ToTensor(),
-                            torchvision.transforms.Resize((30,30)),
-                            torchvision.transforms.RandomHorizontalFlip(p=0.5),
-                            torchvision.transforms.RandomVerticalFlip(p=0.5),
-                            torchvision.transforms.RandomRotation((-90,90)), #min and max degrees
-                            torchvision.transforms.GaussianBlur(kernel_size = (1,1), sigma=(0.1, 2.0)),
-                            torchvision.transforms.RandomErasing(p=0.5, scale=(0.02, 0.25), ratio=(0.3, 3.3)),
-                            torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                          ])
-                        )
-  datasets.append(dset_task)
-  im, label = dset_task[0]
-  if task_no == 0:
-    print(f"We have images of shape {im.shape}")
-  show_dataset_task_sample = False
-  if show_dataset_task_sample:
-    #(task loaded, showing 10 imgs from task)
-    print(f"\n\n Showing 10 images from the dataset of task {task_no}.")
-    print(dset_task._subset)
-    fig = plt.figure()
-    axes = fig.subplots(2, 5)
-    for i in range(10):
-      im, label = dset_task[i]
-      axes[i//5, i%5].set_title(f"label: {label}")
-      axes[i//5, i%5].imshow(im.permute(1,2,0))
-    fig.set_figheight(5)
-    fig.set_figwidth(5)
-    fig.suptitle(f"Dataset {task_no}")
-    fig.tight_layout()
-    plt.show(block = False)
-    print("\n\n")
+def make_datasets(cl_dset, datapath, randomise = False, show_dataset_task_sample = False):
+    from dataset_management.dataset_creation import get_task
 
-# import sys
-# sys.exit()
-
-from random import shuffle
-shuffle(all_classes)
-
-baseline_datasets = list()
-for task_no in range(cl_dset['meta']['task_no']):
-  print(f"Showing info for task {task_no}")
-  subset = all_classes[task_no*cl_dset['meta']['cls_no']:(task_no+1)*cl_dset['meta']['cls_no']]
-  dset_task = TinyImagenetTask(os.path.join(datapath, "train"), subset,
-                        transform = torchvision.transforms.Compose([
-                            torchvision.transforms.ToTensor(),
-                            torchvision.transforms.Resize((500, 500)),
-                            torchvision.transforms.RandomHorizontalFlip(p=0.5),
-                            torchvision.transforms.RandomVerticalFlip(p=0.5),
-                            torchvision.transforms.RandomRotation((-90,90)), #min and max degrees
-                            torchvision.transforms.GaussianBlur(kernel_size = (1,1), sigma=(0.1, 2.0)),
-                            torchvision.transforms.RandomErasing(p=0.5, scale=(0.02, 0.25), ratio=(0.3, 3.3)),
-                            torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                          ])
-                        )
-  baseline_datasets.append(dset_task)
-
-"""A bit of dataset analysis"""
-
-# print(len(datasets[1]))
-
-#@title Mis dset analysis
-
-# image_count_per_task_then_class = []
-# for task_no in range(cl_dset['meta']['task_no']):
-#     image_count_per_task_then_class.append([])
-#     for sclass_label in range(cl_dset['meta']['cls_no']):
-#       image_count_per_task_then_class[-1].append(
-#           sum(  [1 if datasets[task_no][i][1]==sclass_label else 0 for i in range(len(datasets[task_no]))]  ) 
-#       )
-#       print(f"On task {task_no} superclass {sclass_label} has {image_count_per_task_then_class[-1][-1]} representatives.")
-
-# import plotly.graph_objects as go
-
-# fig = go.Figure(data=[go.Table(
-#     header=dict(values
-#                 = ['Superclass label']+[f'Task {i}' for i in range(cl_dset['meta']['task_no'])]),
-#       cells=dict(values = [ [i for i in range(cl_dset['meta']['cls_no'])] ] +
-#                image_count_per_task_then_class)
-#                 )])
-# #     cells=dict(values = [ [i for i in range(cl_dset['meta']['cls_no'])] ] +
-# #                [
-# #                 [ sum(  [1 if datasets[task_no][i][1]==sclass_label else 0 for i in range(len(datasets[task_no]))]  ) 
-# #                for sclass_label in range(cl_dset['meta']['cls_no']) ] 
-# #                 for task_no in range(cl_dset['meta']['task_no']) 
-# #                 ])
-# #                 )])
-# fig.show()
+    all_classes = list()
+    for task_no in range(cl_dset['meta']['task_no']):
+        print(f"Showing info for task {task_no}")
+        task = get_task(cl_dset, task_no, datapath, verbose=True)  # list of classes corresponding to task
+        all_classes += task
+    if randomise:
+        from random import shuffle
+        shuffle(all_classes)
+    datasets = list()
+    for task_no in range(cl_dset['meta']['task_no']):
+        task = all_classes[task_no * cl_dset['meta']['cls_no']:(task_no + 1) * cl_dset['meta']['cls_no']]
+        print(f"task_no {task_no} task: {task}")
+        dset_task = TinyImagenetTask(os.path.join(datapath, "train"), task,
+                            transform = torchvision.transforms.Compose([
+                                torchvision.transforms.ToTensor(),
+                                torchvision.transforms.Resize((30,30))]) )
+        """,
+                                torchvision.transforms.RandomHorizontalFlip(p=0.5),
+                                torchvision.transforms.RandomVerticalFlip(p=0.5),
+                                torchvision.transforms.RandomRotation((-90,90)), #min and max degrees
+                                torchvision.transforms.GaussianBlur(kernel_size = (1,1), sigma=(0.1, 2.0)),
+                                torchvision.transforms.RandomErasing(p=0.5, scale=(0.02, 0.25), ratio=(0.3, 3.3)),
+                                torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                                ])
+                            )"""
+        datasets.append(dset_task)
+        im, label = dset_task[0]
+        if task_no == 0:
+            print(f"We have images of shape {im.shape}")
+        if show_dataset_task_sample:
+            #(task loaded, showing 10 imgs from task)
+            print(f"\n\n Showing 10 images from the dataset of task {task_no}.")
+            print(dset_task._subset)
+            fig = plt.figure()
+            axes = fig.subplots(2, 5)
+            for i in range(10):
+              im, label = dset_task[i]
+              axes[i//5, i%5].set_title(f"label: {label}")
+              axes[i//5, i%5].imshow(im.permute(1,2,0))
+            fig.set_figheight(5)
+            fig.set_figwidth(5)
+            fig.suptitle(f"Dataset {task_no}")
+            fig.tight_layout()
+            plt.show(block = False)
+            print("\n\n")
+    return datasets
 
 
+datasets = make_datasets(cl_dset, datapath, randomise = False)
+# baseline_datasets = make_datasets(cl_dset, datapath, randomise = True)
 
 
 ##Training
@@ -185,7 +141,6 @@ def get_model(model_type):
   return model
 
 #@title Choose model
-"""Getting info back"""
 
 
 model_type = "ModDenseNet" #@param ["LeNet", "LeNet5", "Resnet101", "Resnet50", "Resnet18", "Resnet152", "Densenet169", "Densenet201", "ModDenseNet"]
@@ -201,7 +156,7 @@ if get_back:
 
 trainer_params = {
     "batch_size": 5, #1500 batches for dataset of 7500
-    "num_epochs": 25,
+    "num_epochs": 1,
     "learning_algo": "adam",
     "learning_rate": 1e-3,
     "weight_decay": 1e-5,
@@ -226,9 +181,11 @@ for task i, the list contains all losses on the previous tasks including the cur
 def train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, save_appendix = "", start_from_task = 0):
   metrics = list()
   train_loaders, test_loaders = [], []
+  fisher_diag = None
+  prev_params = None
+  trainer.set_saveloc(save_appendix)
   for task_no in range(len(datasets)):
-    trainer.task_no = task_no
-    trainer.save_appendix = save_appendix
+    trainer.set_task(task_no)
     dset_task = datasets[task_no]
     #split dataset for this task
     train_dset_task, test_dset_task = torch.utils.data.random_split(dset_task,[int(len(dset_task)*0.8),len(dset_task) - int(len(dset_task)*0.8)])
@@ -236,20 +193,32 @@ def train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, s
     #add data loaders corresponding to current task
     train_loaders.append(torch.utils.data.DataLoader(train_dset_task, batch_size=trainer.batch_size, shuffle=True, drop_last=False))
     test_loaders.append(torch.utils.data.DataLoader(test_dset_task, batch_size=trainer.batch_size, shuffle=True, drop_last=False))
-    
-    print(f"\n \n Finished processing dataset for task {task_no}. Proceeding to training.")
+
     #training (all tasks have the same # epochs and batch sizes)
+    
     if task_no >= start_from_task:
-        metrics.append(trainer.train(train_loaders, test_loaders))
+        metrics_task, fisher_diag_task = trainer.train(train_loaders, test_loaders, prev_fisher = fisher_diag, prev_params = prev_params)
+        metrics.append(metrics_task)
+    
+        #modify fisher diag to also reflect task that was trained on.
+
+        if fisher_diag is None:
+            fisher_diag = fisher_diag_task
+        else:
+            fisher_diag += fisher_diag_task
+    
+        #retain params after task is done training
+        with torch.no_grad():
+            for param in trainer.model.parameters():
+                if prev_params is None:
+                    prev_params = param.detach().clone().view([1, -1])
+                else:
+                    prev_params = torch.cat((prev_params, param.detach().clone().view([1, -1])), dim=1)
+    
     if save_on_the_way and task_no >= start_from_task:
-      import pickle
-      with open(os.path.join(basepath, 'savedump',
-                f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_metrics_task_{str(task_no)+save_appendix}"), 'wb') as filehandle:
-        pickle.dump(metrics[-1], filehandle)
-      torch.save(model.state_dict(), 
-                os.path.join(basepath,'savedump',
-                f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_model_after_task{str(task_no)}{save_appendix}") )
-    # plot_metrics(metrics[task_no], title = f"Task {task_no} metrics after {trainer.num_epochs} epochs with learning rate {trainer.lr} for model {model.__class__.__name__}.")
+        trainer.save_metrics(metrics[-1], str(trainer.num_epochs))
+        trainer.save_model(str(trainer.num_epochs))
+
     #RESETTING OPTIMIZER FOR BEGINNING OF NEW TASK
     if trainer_params['learning_algo'] == 'adam':
             trainer.optimizer = torch.optim.Adam(params = trainer.model.parameters(),
@@ -257,10 +226,12 @@ def train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, s
     else:
             trainer.optimizer = torch.optim.SGD(params = trainer.model.parameters(), 
                                  lr = trainer_params['learning_rate'], weight_decay = trainer_params['weight_decay'])
-  return metrics
+    return metrics
+
 
 if True:
-    metrics = train_datasets(model, trainer, datasets, basepath, save_on_the_way = True, save_appendix = f"_{dataset_name}", start_from_task = 0)
+    trainer.nosave()
+    metrics = train_datasets(model, trainer, datasets, basepath, save_appendix = f"_{dataset_name}", start_from_task = 0)
     with open(os.path.join(basepath,'savedump',
         f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_{dataset_name}"), 'wb') as filehandle:
           pickle.dump(metrics, filehandle)
@@ -268,15 +239,17 @@ if True:
     """Training on baseline dataset"""
 
     #@title Train on baseline (reinitialise model if it was already trained on nonbaseline tasks)
-    reinitialise_model = True  #@param {type:"boolean"}
+    reinitialise_model = False  #@param {type:"boolean"}
     if reinitialise_model:
       model = get_model(model_type)
     #MODEL & TRAINER MUST BE REINITIALISED IF ALREADY TRAINED ON GOOD TASKS
+    """
     metrics_baseline = train_datasets(model, trainer, basepath, baseline_datasets, save_on_the_way = True, save_appendix = f"_baseline_{dataset_name}")
     with open(os.path.join(basepath, "savedump",
                            f"{model.__class__.__name__}_{str(trainer.num_epochs)}_epochs_lr{str(trainer.lr)}_overall_metrics_baseline_{dataset_name}")
             , 'wb') as filehandle:
           pickle.dump(metrics_baseline, filehandle)
+    """
 
     """Training on big dataset"""
     #NOT NEEDED ANYMORE
