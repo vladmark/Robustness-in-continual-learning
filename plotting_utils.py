@@ -85,41 +85,86 @@ def plot_metrics(all_metrics: dict, model_type: str, save_to = None):
     pp.savefig()
     pp.close()
 
-def plot_accuracies(all_metrics, model_type, no_tasks = None, save_to = None, basepath = ""):
+def plot_acc_average_tasks(all_metrics, model_type, no_tasks = None, save_to = None, basepath = "", only_last_epoch = False, save = True):
   if save_to == None:
     save_to = os.path.join(basepath, "savedump", "acc_plots"+model_type+".pdf")
   if no_tasks == None:
     no_tasks = len(all_metrics.keys())
+  accuracies = []
+  fig = plt.figure()
+  if only_last_epoch:
+    accuracies = [all_metrics[task]["all_task_averages"][-1] for task in all_metrics.keys()]
+    fig.suptitle(f"Evolution of average accuracies for all tasks for {model_type} - only last epoch of training for each task shown.")
+    plt.xlabel('task')
+  else:
+    for task in all_metrics.keys():
+      accuracies += all_metrics[task]["all_task_averages"]
+    fig.suptitle(f"Evolution of average accuracies for all tasks for {model_type}")
+    plt.xlabel('epoch (total)')
+
+  plt.plot(accuracies, c='b', label = model_type)
+  plt.ylabel('acc')
+  if save:
+    pp = PdfPages(save_to)
+    pp.savefig()
+    pp.close()
+  return
+
+def plot_acc_taskwise(all_metrics, model_type, no_tasks = None, save_to = None, basepath = "", save = True):
+  """
+  param: all_metrics: a dict containing multiple overall metrics for several training routines
+  """
+  if save_to == None:
+    save_to = os.path.join(basepath, "savedump", "acc_plots"+model_type+".pdf")
+  if no_tasks == None:
+    for k in all_metrics.keys():
+      no_tasks = len(all_metrics[k].keys())
+      break
   """
   model_type is used only for title of plot
   for each tasks, construct a single plot by unifying (test) accuracies over training for different tasks
   start with task 0 (on first row)
   """
+  plt.rcParams['axes.xmargin'] = 0.0
   fig = plt.figure()
-  print("got here")
-  axes = [plt.axes([task/no_tasks, (no_tasks - (task+1))/no_tasks, (no_tasks-task)/no_tasks , 1/no_tasks]) for task in range(no_tasks)] #dims are [left, bottom, width, height]
+  gs = fig.add_gridspec(ncols = no_tasks, nrows = no_tasks)
+  # axes = [fig.add_axes([task/no_tasks, (no_tasks - (task+1))/no_tasks, (no_tasks-task)/no_tasks , 1/no_tasks], frameon = False) for task in range(no_tasks)] #dims are [left, bottom, width, height]
+  axes = [fig.add_subplot(gs[task, task:], frameon = False) for task in range(no_tasks)]
   print(f"There are {len(axes)} axes to plot.")
-  accuracies = []
-  for reconstr_task_no in range(no_tasks):
-    accuracies.append([])
-    for task_no in range(reconstr_task_no, no_tasks): #the only tasks that contain the reconstructed task are the ones bigger than or equal to it
-      """
-      to reconstruct the task accuracy, look at each task and pick the appropriate accuracy, then append it to the reconstructed acc
-      """
-      accuracies[-1] += all_metrics[task_no]['test_acc'][reconstr_task_no]
-    print(f"setting axes for task {reconstr_task_no}")
-    axes[reconstr_task_no].plot(accuracies[-1], c='b', label = model_type)
-    axes[reconstr_task_no].set_title(f"Task {reconstr_task_no} evolution.")
+  accuracies = dict()
+  for key in all_metrics.keys():
+    accuracies[key] = []
+    for reconstr_task_no in range(no_tasks):
+      accuracies[key].append([])
+      for task_no in range(reconstr_task_no, no_tasks): #the only tasks that contain the reconstructed task are the ones bigger than or equal to it
+        """
+        to reconstruct the task accuracy, look at each task and pick the appropriate accuracy, then append it to the reconstructed acc
+        """
+        accuracies[key][-1] += all_metrics[key][task_no]['test_acc'][reconstr_task_no]
 
-  fig.suptitle("Accuracy evolution over training for " + model_type)
+  for reconstr_task_no in range(no_tasks):
+    if reconstr_task_no > 3:
+      axes[reconstr_task_no].set_title(f"Task {reconstr_task_no+1} evolution.", fontsize = 6, y=0.1, x = 0.66)
+    else:
+      axes[reconstr_task_no].set_title(f"Task {reconstr_task_no + 1} evolution.", fontsize=6, y=0.8, pad=-14, x=0.75)
+    plots = []
+    for key in all_metrics.keys():
+      color = "m" if "shuffled" in key and "ewc" in key else "r" if "shuffled" in key else "y" if "ewc" in key else "g"
+      # locplot, = axes[reconstr_task_no].plot(accuracies[key][reconstr_task_no], c = color)
+      locplot, = axes[reconstr_task_no].plot(accuracies[key][reconstr_task_no], c = color)
+      plots.append(locplot)
+    if reconstr_task_no == 0:
+      axes[reconstr_task_no].legend(plots, [key.replace("_", " ") for key in all_metrics.keys()], loc = "upper right", fontsize = 10)
+    axes[reconstr_task_no].set_xlabel('', fontsize = 6)
+    # axes[reconstr_task_no].tick_params(axis="y",direction="in", pad=-22)
+  # fig.suptitle("Accuracy evolution over training for " + model_type, fontsize = 9)
   fig.set_figheight(10)
   fig.set_figwidth(10)
-  fig.tight_layout()
+  # fig.tight_layout(pad = 0.3)
   plt.show()
   # plt.subplots_adjust(hspace = 0.05, top = 0.1, bottom = 0.1)
-  pp = PdfPages(save_to)
-  pp.savefig()
-  pp.close()
+  if save:
+    fig.savefig(save_to)
 
 
 # for model_type in ["LeNet", "ResNet"]:
