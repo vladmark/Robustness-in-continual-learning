@@ -4,6 +4,7 @@
 **/test
 **/val
 !(**/.txt)
+**/*_model_*
 savedump/old/
 # Project
 data/*.zip
