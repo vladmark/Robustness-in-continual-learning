@@ -4,8 +4,8 @@
 **/test
 **/val
 !(**/.txt)
-**/*_model_*
 savedump/old/
+**/*_model*
 # Project
 data/*.zip
 data/tiny-imagenet-200/**/*

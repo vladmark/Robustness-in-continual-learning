@@ -86,28 +86,40 @@ def plot_metrics(all_metrics: dict, model_type: str, save_to = None):
     pp.close()
 
 def plot_acc_average_tasks(all_metrics, model_type, no_tasks = None, save_to = None, basepath = "", only_last_epoch = False, save = True):
+  """
+    param: all_metrics: a dict containing multiple overall metrics for several training routines
+  """
   if save_to == None:
-    save_to = os.path.join(basepath, "savedump", "acc_plots"+model_type+".pdf")
+    save_to = os.path.join(basepath, "savedump", model_type+"acc_averages_all_tasks.pdf")
   if no_tasks == None:
     no_tasks = len(all_metrics.keys())
-  accuracies = []
+  accuracies = dict()
   fig = plt.figure()
   if only_last_epoch:
-    accuracies = [all_metrics[task]["all_task_averages"][-1] for task in all_metrics.keys()]
     fig.suptitle(f"Evolution of average accuracies for all tasks for {model_type} - only last epoch of training for each task shown.")
     plt.xlabel('task')
+    for key in all_metrics.keys(): #keys represent different training routines
+      accuracies[key] = [all_metrics[key][task]["all_task_averages"][-1] for task in all_metrics[key].keys()]
   else:
-    for task in all_metrics.keys():
-      accuracies += all_metrics[task]["all_task_averages"]
     fig.suptitle(f"Evolution of average accuracies for all tasks for {model_type}")
     plt.xlabel('epoch (total)')
+    for key in all_metrics.keys():  # keys represent different training routines
+      accuracies[key] = []
+      for task in all_metrics[key].keys():
+          accuracies[key] += all_metrics[key][task]["all_task_averages"]
 
-  plt.plot(accuracies, c='b', label = model_type)
+  plots = []
+  for key in all_metrics.keys():
+    color = "orange" if "shuffled" in key and "specdec" in key else "cyan" if "specdec" in key \
+      else "m" if "shuffled" in key and "ewc" in key else "r" if "shuffled" in key else "y" if "ewc" in key else "g"
+    locplot, = plt.plot(accuracies[key], c = color, label = model_type, linewidth = 2)
+    plots.append(locplot)
+  plt.legend(plots, [key.replace("_", " ") for key in all_metrics.keys()], loc="upper right",
+                                fontsize=15)
   plt.ylabel('acc')
+  plt.show()
   if save:
-    pp = PdfPages(save_to)
-    pp.savefig()
-    pp.close()
+    fig.savefig(save_to)
   return
 
 def plot_acc_taskwise(all_metrics, model_type, no_tasks = None, save_to = None, basepath = "", save = True):
@@ -125,6 +137,7 @@ def plot_acc_taskwise(all_metrics, model_type, no_tasks = None, save_to = None, 
   for each tasks, construct a single plot by unifying (test) accuracies over training for different tasks
   start with task 0 (on first row)
   """
+  import matplotlib.pyplot as plt
   plt.rcParams['axes.xmargin'] = 0.0
   fig = plt.figure()
   gs = fig.add_gridspec(ncols = no_tasks, nrows = no_tasks)
@@ -149,7 +162,8 @@ def plot_acc_taskwise(all_metrics, model_type, no_tasks = None, save_to = None, 
       axes[reconstr_task_no].set_title(f"Task {reconstr_task_no + 1} evolution.", fontsize=6, y=0.8, pad=-14, x=0.75)
     plots = []
     for key in all_metrics.keys():
-      color = "m" if "shuffled" in key and "ewc" in key else "r" if "shuffled" in key else "y" if "ewc" in key else "g"
+      color = "orange" if "shuffled" in key and "specdec" in key else "cyan" if "specdec" in key \
+        else "m" if "shuffled" in key and "ewc" in key else "r" if "shuffled" in key else "y" if "ewc" in key else "g"
       # locplot, = axes[reconstr_task_no].plot(accuracies[key][reconstr_task_no], c = color)
       locplot, = axes[reconstr_task_no].plot(accuracies[key][reconstr_task_no], c = color)
       plots.append(locplot)
@@ -178,3 +192,80 @@ def plot_acc_taskwise(all_metrics, model_type, no_tasks = None, save_to = None, 
 #
 # plot_all_metrics_for_model(all_metrics = all_metrics, model_type = model_type, save_to = "plots_"+model_type+".pdf")
 # plot_accuracies_for_model(all_metrics = all_metrics, model_type = model_type, no_tasks = 6)
+
+
+def plot_train_rout_conf_entr(all_metrics, model_type, no_tasks = None, save_to = None, basepath = "", save = True):
+  """
+  param: all_metrics: a dict containing metrics for just one training routine. its keys are task numbers. the value for each task number is a dict with (relevant) keys "test_confusion" and "test_entropies"
+  """
+  import torch
+  if save_to == None:
+    save_to = os.path.join(basepath, "savedump", "confusion_plots"+model_type+".pdf")
+  if no_tasks == None:
+    no_tasks = len(all_metrics.keys())
+  import matplotlib.pyplot as plt
+  plt.rcParams['axes.xmargin'] = 0.0
+  fig = plt.figure()
+  gs = fig.add_gridspec(ncols=no_tasks, nrows=no_tasks)
+  axes = [fig.add_subplot(gs[task, task:], frameon=False) for task in range(no_tasks)]
+  # for elt in all_metrics[0]['test_entropies'][0][0][0]:
+  #   print(f"elt {elt} of type {type(elt)}")
+  """
+    a little fix: unfortunately key for test confusions was sometimes 'test_confusion' and sometimes 'test_confusions'
+  """
+  conf_key = 'test_confusions' if 'test_confusions' in all_metrics[0].keys() else 'test_confusion' if 'test_confusion' in all_metrics[0].keys() else 'test_confusion'
+  no_classes = all_metrics[0][conf_key][0][0].shape[0]
+  """
+  confusions: first level keys: tasks ; second level keys: classes. confusions[task][class] is a list of accuracies on a class for task over all epchs
+  similarly for entropies; entropies[task][class] is a list of average over logits predicted rightly for class over task over all epochs
+  
+  entropy double list:  e[i][j] = tensor containing logits on class i when it was classified as class j
+  """
+  confusions = []
+  entropies = []
+
+  for reconstr_task_no in range(no_tasks):
+    confusions.append([])
+    entropies.append([])
+    for cls in range(no_classes):
+      confusions[-1].append([])
+      entropies[-1].append([])
+      for task_no in range(reconstr_task_no,
+                           no_tasks):  # the only tasks that contain the reconstructed task are the ones bigger than or equal to it
+          """
+          a little fix: unfortunately key for test confusions was sometimes 'test_confusion' and sometimes 'test_confusions'
+          """
+          conf_key = 'test_confusions' if 'test_confusions' in all_metrics[task_no].keys() else 'test_confusion' if 'test_confusion' in all_metrics[task_no].keys() else 'test_confusion'
+          confusions[reconstr_task_no][cls] += [matr[cls, cls]/matr[cls, :].sum() if matr[cls, cls] != 0 else 0 for matr in all_metrics[task_no][conf_key][reconstr_task_no]]
+          # print(confusions[reconstr_task_no][cls])
+          # there was a mistake in creation of entr_list; each entr_list[cls][cls] should be a tensor, but instead it is always a list with one element
+
+          # for elt in all_metrics[task_no]['test_entropies'][reconstr_task_no][cls][cls]: #TEST
+          #   print(f"elt {elt} of type {type(elt)}")
+
+          entropies[reconstr_task_no][cls] += [torch.mean(entr_list[cls][cls][0])
+                                               if isinstance(entr_list[cls][cls], list) and entr_list[cls][cls]
+                                               else entr_list[cls][cls] if isinstance(entr_list[cls][cls], torch.Tensor)
+                                                else 0 for entr_list in all_metrics[task_no]['test_entropies'][reconstr_task_no]]
+  colors = ['m', 'g', 'r', 'y', 'b', 'k', 'cyan', 'orange']
+  for reconstr_task_no in range(no_tasks):
+    if reconstr_task_no > 3:
+      axes[reconstr_task_no].set_title(f"Task {reconstr_task_no+1} evolution.", fontsize = 6, y=0.1, x = 0.66)
+    else:
+      axes[reconstr_task_no].set_title(f"Task {reconstr_task_no + 1} evolution.", fontsize=6, y=0.8, pad=-14, x=0.75)
+    plots = []
+    for cls in range(no_classes):
+      # print(confusions[reconstr_task_no][cls])
+      locplot, = axes[reconstr_task_no].plot(confusions[reconstr_task_no][cls], c = colors[cls])
+      axes[reconstr_task_no].plot(entropies[reconstr_task_no][cls], c = colors[cls], linestyle = 'dashed')
+      plots.append(locplot)
+    if reconstr_task_no == 0:
+      axes[reconstr_task_no].legend(plots, [f"class {cls}" for cls in range(no_classes)], loc = "upper right", fontsize = 10)
+    axes[reconstr_task_no].set_xlabel('', fontsize = 6)
+  fig.suptitle(f"{save_to}")
+  fig.set_figheight(10)
+  fig.set_figwidth(10)
+  plt.show()
+  if save:
+    fig.savefig(save_to)
+  return

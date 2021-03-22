@@ -149,7 +149,7 @@ class DFSLeafCount:
     def dfs(self, v):
         """
         Constructs a spanning tree (recovers information of spanning tree) in _edge_to
-        and marks all nodes that we can get to, starting from root and using only nodes in all_parents, in _marked
+        and marks all nodes that we can get to, starting from root v and using only nodes in all_parents, in _marked
         """
         self._marked[v] = True
 
@@ -263,6 +263,7 @@ def construct_tasks(datapath, min_imgs = 1, max_imgs = 1000):
             if class_imgs <= max_imgs and class_imgs >= min_imgs:
                 wnids.append(cls_id)
 
+    assert wnids, "No leaf classes found which satisfy the wanted constraints of minimum and maximum number of images!"
     words_file = open(os.path.join(datapath,"words.txt"), "r")
     wnid2words = {r[0]: r[1] for r in csv.reader(words_file, delimiter="\t")}
     # words2wnid = {r[1]: r[0] for r in csv.reader(words_file, delimiter="\t")}
@@ -290,16 +291,16 @@ def construct_tasks(datapath, min_imgs = 1, max_imgs = 1000):
     print("\nLeaf set for each node: ")
     dfsl = DFSLeafCount(tree, tree.root) #constructor also calls dfs method
 
-    print_leaves_under_each_node = False #@param {type:"boolean"}
+    print_leaves_under_each_node = True
     if print_leaves_under_each_node:
       for node, leafs in sorted(dfsl._leafs.items(), key=lambda kv: len(kv[1])): #dfsl._leafs remembers all the leaves under each node (also indirect leafs)
           print(f"node {wnid2words[node]} has {len(leafs)} leafs.")
 
-    #EXAMPLE: look at the path from a given class to the root
-    print(f"\nFrom `{wnid2words['n02504458']}` to `{wnid2words[tree.root]}`:")
-    ancestors = dfsl.get_path_to("n02504458")  # african elephant to root
-    for ancestor in ancestors:
-        print(f"  -->  {wnid2words[ancestor]} [{ancestor}]")
+    #EXAMPLE; WILL NOT WORK IF THE EXAMPLE CLASS WAS EXCLUDED FROM GRAPH BECAUSE OF NO OF IMAGES CONSTRAINT: look at the path from a given class to the root
+    # print(f"\nFrom `{wnid2words['n02504458']}` to `{wnid2words[tree.root]}`:")
+    # ancestors = dfsl.get_path_to("n02504458")  # african elephant to root
+    # for ancestor in ancestors:
+    #     print(f"  -->  {wnid2words[ancestor]} [{ancestor}]")
 
     # Set some constraints, the minimum and the maximum no of leafs for which
     # a superclass is a valid pick.

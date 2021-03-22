@@ -3,68 +3,31 @@ import torch
 import pickle
 import matplotlib.pyplot as plt
 import os
-
-# setup device (CPU/GPU)
-if torch.cuda.is_available():
-    device = torch.device('cuda:1')
-else:
-    device = torch.device('cpu')
-# device = torch.device('cpu')
-
-print(f"Working on device: {device}.")
-
-dataset_name = "imagenet"
-datapath = os.path.join("data", dataset_name)
-basepath = os.path.join("")
-
-"""Imgnet premade downloader: https://towardsdatascience.com/how-to-scrape-the-imagenet-f309e02de1f4"""
-
-"""https://medium.com/@staticmukesh/how-i-managed-to-delete-1-billions-files-from-my-google-drive-account-9fdc67e6aaca """
-
-# from dataset_management.task_creation import construct_tasks
-# construct_tasks(datapath, min_imgs = 600, max_imgs = 5000)
-
-"""## **Datasets** """
-
+import json
+from dataset_management.task_creation import construct_tasks
 from dataset_management.dataset_creation import TinyImagenetTask
 from dataset_management.dataset_creation import get_cl_dset
-
-"""### Getting the datasets"""
-# cl_dset = get_cl_dset(os.path.join(datapath, "cl_t7_c21.txt"))
-# cl_dset = get_cl_dset(os.path.join(datapath, "cl_t5_c15.txt"))
-"""
-cl_dset: a dictionary containing
-        -> key 'meta': dict with keys: cls_no (classes per task), task_no (# of tasks), misc (number of misc classes)
-        -> other keys: the disjoint superclasses used in making of tasks (their number is the number of classes/task)
-"""
-split_file_name = "cl_t7_c3"
-cl_dset = get_cl_dset(os.path.join(datapath, split_file_name + ".txt"))
+from dataset_management.dataset_creation import get_task
+from Trainer import Trainer
 
 
-def make_datasets(cl_dset, datapath, randomise=False, show_dset_img_sample=False, premade_tasks=None):
-    from dataset_management.dataset_creation import get_task
-
+def make_datasets(cl_dset, datapath, randomise = False, show_dset_img_sample = False, premade_tasks = None):
     all_classes = list()
     for task_no in range(cl_dset['meta']['task_no']):
         task = get_task(cl_dset, task_no, datapath, verbose=True) if premade_tasks is None else premade_tasks[
             task_no]  # list of classes (strings) corresponding to task
-        print(f"task number {task_no} task: {task}")
         all_classes += task
     if randomise:
         from random import shuffle
         shuffle(all_classes)
     datasets = list()
+    all_tasks_gathered = []
     for task_no in range(cl_dset['meta']['task_no']):
         # Getting task
         task = all_classes[task_no * cl_dset['meta']['cls_no']:(task_no + 1) * cl_dset['meta']['cls_no']]
-
+        all_tasks_gathered.append(task)
         # Printing stuff
-        print(f"Classes in task {task_no}: {task}")
-        task_img_counts = [len([img for img in os.listdir(os.path.join(datapath, "train", f"{cls_id}"))]) for cls_id in
-                           task]
-        print(
-            f"Task {task_no} has {sum(task_img_counts)} images in total, proportioned: {[(cls_cnt, '{:.2%}'.format(cls_cnt / float(sum(task_img_counts)))) for cls_cnt in task_img_counts]} .\n")
-
+        print(f"task {task_no}{' shuffled' if randomise else ' unshuffled'}: {task}")
         # Make task dataset
         dset_task = TinyImagenetTask(os.path.join(datapath, "train"), task,
                                      transform=torchvision.transforms.Compose([
@@ -98,36 +61,7 @@ def make_datasets(cl_dset, datapath, randomise=False, show_dset_img_sample=False
             fig.tight_layout()
             plt.show(block=False)
             print("\n\n")
-    return datasets
-
-
-datasets = make_datasets(cl_dset, datapath, randomise=False)
-shuffled_datasets = make_datasets(cl_dset, datapath, randomise=True)
-
-##Training
-
-
-trainer_params = {
-    "batch_size": 50,  # 1500 batches for dataset of 7500
-    "num_epochs": 20,
-    "learning_algo": "adam",
-    "learning_rate": 1e-3,
-    "weight_decay": 1e-5,
-    "device": device,
-    "basepath": basepath
-}
-
-from Trainer import Trainer
-
-trainer = Trainer(trainer_params)
-
-"""Choose model to be used"""
-model_type = "VGG11"  # @param ["LeNet", "LeNet5", "Resnet101", "Resnet50", "Resnet18", "Resnet152", "Densenet169", "Densenet201", "ModDenseNet"]
-
-get_back = False
-trainer.set_model(model_type, cl_dset, load=get_back,
-                  load_attr={"basepath": basepath, "path": "savedump", "suffix": "_imagenet",
-                             "num_epochs": trainer.num_epochs, "task": len(datasets) - 1})
+    return datasets, all_tasks_gathered
 
 if False:
     # calculate test confusions using models gotten back
@@ -196,14 +130,15 @@ for task i, the list contains all losses on the previous tasks including the cur
 """
 
 
-def train_datasets(trainer, datasets, ewc=False, save_appendix="", start_from_task=0, save_at_least_end_task=True):
+def train_datasets(trainer, datasets, ewc=False, spec_decoup = False, save_appendix="", start_from_task=0, save_at_least_end_task = False):
     save_appendix += "_ewc" if ewc else ""
+    save_appendix += "_specdec" if spec_decoup else ""
+    print(f"---------------------Training {save_appendix}-----------------------------")
+    trainer.set_saveloc(save_appendix)
     metrics = list()
     train_loaders, test_loaders = [], []
     fisher_diag = None
     prev_params = None
-    trainer.set_saveloc(save_appendix)
-    print(save_appendix)
     for task_no in range(len(datasets)):
         trainer.set_task(task_no)
         dset_task = datasets[task_no]
@@ -211,7 +146,7 @@ def train_datasets(trainer, datasets, ewc=False, save_appendix="", start_from_ta
         train_dset_task, test_dset_task = torch.utils.data.random_split(dset_task, [int(len(dset_task) * 0.8),
                                                                                     len(dset_task) - int(
                                                                                         len(dset_task) * 0.8)])
-
+        print(f"        --------------- task {task_no} --------------- ")
         # add data loaders corresponding to current task
         train_loaders.append(
             torch.utils.data.DataLoader(train_dset_task, batch_size=trainer.batch_size, shuffle=True, drop_last=False))
@@ -221,7 +156,7 @@ def train_datasets(trainer, datasets, ewc=False, save_appendix="", start_from_ta
         # training (all tasks have the same # epochs and batch sizes)
 
         if task_no >= start_from_task:
-            metrics_task, fisher_diag_task = trainer.train(train_loaders, test_loaders, ewc=ewc,
+            metrics_task, fisher_diag_task = trainer.train(train_loaders, test_loaders, spec_decoup = spec_decoup, ewc=ewc,
                                                            prev_fisher=fisher_diag, prev_params=prev_params)
             metrics.append(metrics_task)
             if ewc:
@@ -252,24 +187,91 @@ def train_datasets(trainer, datasets, ewc=False, save_appendix="", start_from_ta
     return metrics
 
 
-if True:
-    trainer.save()
-    metrics = train_datasets(trainer, datasets, ewc=False, save_appendix=f"_{dataset_name}_{split_file_name}",
-                             start_from_task=0)
+def main(cudano):
+    # -------------------------initial setup------------------------------#
+    # setup device (CPU/GPU)
+    if torch.cuda.is_available():
+        device = torch.device(int(cudano) if cudano is not None and int(cudano) < torch.cuda.device_count() else 0)
+    else:
+        device = torch.device('cpu')
+    print(f"Working on device: {device}.")
 
-    # @title Train on baseline (reinitialise model if it was already trained on nonbaseline tasks)
-    reinitialise_model = True  # @param {type:"boolean"}
-    if reinitialise_model:
-        trainer.set_model(model_type, cl_dset)
-    # MODEL & TRAINER MUST BE REINITIALISED IF ALREADY TRAINED ON GOOD TASKS
+    base_dataset_name = "imagenet"
+    datapath = os.path.join("data", base_dataset_name)
+    basepath = os.path.join("")
 
-    metrics_shuffled = train_datasets(trainer, shuffled_datasets, ewc=False,
-                                      save_appendix=f"_{dataset_name}_{split_file_name}_shuffled")
+    #-------------------------creating tasks------------------------------#
 
-    trainer.set_model(model_type, cl_dset)
-    metrics_ewc = train_datasets(trainer, datasets, ewc=True, save_appendix=f"_{dataset_name}_{split_file_name}",
-                                 start_from_task=0)
+    # construct_tasks(datapath, min_imgs = 500, max_imgs = 5000)
 
-    trainer.set_model(model_type, cl_dset)
-    metrics_shuffled_ewc = train_datasets(trainer, shuffled_datasets, ewc=True,
-                                          save_appendix=f"_{dataset_name}_{split_file_name}_shuffled")
+
+    #-------------------------making datasets------------------------------#
+
+    """
+    cl_dset: a dictionary containing
+            -> key 'meta': dict with keys: cls_no (classes per task), task_no (# of tasks), misc (number of misc classes)
+            -> other keys: the disjoint superclasses used in making of tasks (their number is the number of classes/task)
+    """
+
+    file_names = ["cl_t5_c8", "cl_t10_c13", "cl_t7_c16", "cl_t5_c26"]
+    datasets_dict = {}
+    for split_file_name in file_names:
+        print(f"----------------------{split_file_name}--------------------------------------")
+        cl_dset = get_cl_dset(os.path.join(datapath, split_file_name + ".txt"))
+        datasets, _ = make_datasets(cl_dset, datapath, randomise = False)
+        shuffled_datasets, shuffled_tasks = make_datasets(cl_dset, datapath, randomise = True)
+        datasets_dict[split_file_name] = {
+            "meta_dset": cl_dset,
+            "unshuffled": datasets,
+            "shuffled": shuffled_datasets
+        }
+        with open(f'latest_shuffled_tasks_{split_file_name}.txt', 'w') as filehandle:
+            json.dump(shuffled_tasks, filehandle)
+        print("\n\n\n")
+
+    #-------------------------setting up model and trainer params------------------------------------#
+
+    trainer_params = {
+        "batch_size": 50,  # 1500 batches for dataset of 7500
+        "num_epochs": 20,
+        "learning_algo": "adam",
+        "learning_rate": 1e-4,
+        "weight_decay": 1e-5,
+        "device": device,
+        "basepath": basepath,
+        "sd_coef": 0.003,
+        "ewc_coef": 400
+    }
+
+    trainer = Trainer(trainer_params)
+
+    """Choose model to be used"""
+    model_type = "Resnet18"  # @param ["LeNet", "LeNet5", "Resnet101", "Resnet50", "Resnet18", "Resnet152", "Densenet169", "Densenet201", "ModDenseNet", "VGG11", VGG13"]
+
+    trainer.save() #set the intermediary save functionality to True (method .nosave() for reverting; default is True)
+
+    for ewc in [False, True]:
+        for spec_decoup in [False, True]:
+            if not (ewc and spec_decoup): #only train each regularization method, not both
+                for task_div_denominator in datasets_dict.keys():
+                    trainer.set_model(model_type, datasets_dict[task_div_denominator]["meta_dset"])
+                    #unshuffled
+                    train_datasets(trainer, datasets_dict[task_div_denominator]["unshuffled"], spec_decoup=spec_decoup, ewc=ewc,
+                                   save_appendix=f"_{base_dataset_name}_{task_div_denominator}")
+                    #shuffled (base)
+                    train_datasets(trainer, datasets_dict[task_div_denominator]["shuffled"], spec_decoup = spec_decoup, ewc = ewc,
+                            save_appendix = f"_{base_dataset_name}_{task_div_denominator}" + "_shuffled")
+
+
+if __name__ == "__main__":
+    import argparse
+    import re
+    parser = argparse.ArgumentParser()
+    def regex_num(arg_value, pat = re.compile(r"^[0-9]+$")): #accept only one or more digits
+        if not pat.match(arg_value):
+            raise argparse.ArgumentTypeError
+        return arg_value
+    parser.add_argument("--cuda", help = "cuda core (just number)", type = regex_num)
+    args = parser.parse_args()
+    cudano = args.cuda
+    main(cudano = cudano)

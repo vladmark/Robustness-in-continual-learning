@@ -31,6 +31,8 @@ class Trainer:
             self.set_optimizer()
         self.num_epochs = hyperparams['num_epochs']
         self.lr = hyperparams['learning_rate']
+        self.sd_coef = hyperparams['sd_coef']
+        self.ewc_coef = hyperparams['ewc_coef']
         self.batch_size = hyperparams['batch_size']
         self.basepath = hyperparams['basepath']
         self.save_appendix = ""
@@ -94,7 +96,7 @@ class Trainer:
         self.set_optimizer()
         return
 
-    def train_epoch(self, train_loader, epoch_num: int, prev_fisher = None, prev_params = None, compute_new_fisher = False):
+    def train_epoch(self, train_loader, epoch_num: int, spec_decoup = False, prev_fisher = None, prev_params = None, compute_new_fisher = False):
         """
             Compute the loss on the training set
             :param
@@ -110,8 +112,12 @@ class Trainer:
             # reset gradients
 
             self.optimizer.zero_grad()
-            batch_logits=self.model(batch_imgs)
+            batch_logits = self.model(batch_imgs)
             batch_loss = loss(batch_logits, batch_labels)
+
+            #do spec decoupling if wanted
+            if spec_decoup:
+                batch_loss += self.sd_coef * torch.mean(batch_logits ** 2)
 
             batch_loss_corrected = batch_loss
 
@@ -128,7 +134,7 @@ class Trainer:
                             # print(f"-----param: {param[:1]}")
                             # print(f"-----prev_param: {prev_params[name][:1]}")
                             pass
-                        param_loss = prev_fisher[name] * (param - prev_params[name])**2 # '*' is elementwise multiplication and '**' is eltwise exponentiation. this is ok, no need for dot product (this is the dot product)
+                        param_loss = self.ewc_coef/2 * prev_fisher[name] * (param - prev_params[name])**2 # '*' is elementwise multiplication and '**' is eltwise exponentiation. this is ok, no need for dot product (this is the dot product)
                         if setprint:
                             # print(f"param {name} loss: {param_loss}")
                             pass
@@ -137,16 +143,6 @@ class Trainer:
                         batch_loss_corrected += param_loss.sum()
                         if setprint:
                             print(f"after correction of param {name} we have batch loss {batch_loss_corrected}")
-                if batch_num == 0:
-                    print(f"len of dict (trainable) prev_params: {len(prev_params.keys())}; len of prev_fisher: {len(prev_fisher.keys())}; "
-                          f"len of current dict of (trainable) model params: {len([1 for _,p in self.model.named_parameters() if p.requires_grad])}")
-                if setprint:
-                    """
-                    This is useless because the assignment batch_loss_corrected = batch_loss does nothing: 
-                    batch_loss will end up referencing the same value as batch_loss_corrected; 
-                    if we want to do this, batch_loss needs to be detached when adding it to batch_loss_corrected, but that might mess up the computational graph, need to make sure the graph is retained!!
-                    """
-                    # print(f"(Batch {batch_num}, epoch {epoch_num}): regular batch loss {batch_loss}, corrected batch loss {batch_loss_corrected}. \n\n") #USELESS (AS IS NOW)
 
             epoch_loss += batch_loss.item()
             batch_loss_corrected.backward()
@@ -158,12 +154,8 @@ class Trainer:
               batch_acc, _ = self.get_accuracy(batch_logits, batch_labels)
               epoch_acc += batch_acc.item()
 
-            if batch_num % 100 == 0:
-                print(f"(epoch: {epoch_num}, batch: {batch_num + 1}), batch loss = {batch_loss.item()}")
-
         epoch_loss /= (batch_num + 1)
         epoch_acc /= (batch_num + 1)
-        print(f"epoch {epoch_num} has overall loss {epoch_loss}")
 
         fisher_diag = None
         """
@@ -237,7 +229,7 @@ class Trainer:
                     epoch_confusion += batch_confusion
             epoch_loss /= (batch_num + 1)
             epoch_acc /= (batch_num + 1)
-            #dealing with entropy; want entropy matrix, e[i,j] = average confidence of class i when it was classified as class j
+            #dealing with entropy; want entropy matrix, e[i,j] = logits on class i when it was classified as class j
             entr_matrix = [[ [] for _ in range(all_pred_probs.shape[-1])] for _ in range(all_pred_probs.shape[-1])]
             from scipy.stats import entropy
             for i, j in zip(range(all_pred_probs.shape[-1]), range(all_pred_probs.shape[-1]) ):
@@ -272,11 +264,11 @@ class Trainer:
         all_task_avgs = [np.average([taskwise_averages[task][epoch] for task in range(len(taskwise_averages))], weights = weights) for epoch in range(no_epochs)]
         return all_task_avgs
 
-    def train(self, train_loaders, test_loaders, ewc = False, prev_fisher = None, prev_params = None):
+    def train(self, train_loaders, test_loaders, spec_decoup = False, ewc = False, prev_fisher = None, prev_params = None):
         """
         Expects one or multiple train loaders corresponding to specific tasks in a list
         Assumes the last train loader & test loader correspond to current task and that we've done the training on previous tasks before.
-        At the end of each epoch of training on current task also retests perfomance on each previous task.
+        At the end of each epoch of training on current task also retests performance on each previous task.
         """
         train_loader, test_loader = train_loaders[-1], test_loaders[-1]
         train_losses, test_losses, train_acc, test_acc = [[] for i in range(len(train_loaders))], [[] for i in range(len(train_loaders))], [[] for i in range(len(train_loaders))], [[] for i in range(len(train_loaders))]
@@ -284,10 +276,10 @@ class Trainer:
         test_entropies = [[] for _ in range(len(train_loaders))]
         if True:
             for epoch in range(self.num_epochs):
-                print(f"learning rate at epoch {epoch}: {[g['lr'] for g in self.optimizer.param_groups]}")
                 epoch_train_loss, epoch_train_acc, fisher_diag = \
-                    self.train_epoch(train_loader, epoch, compute_new_fisher = True if epoch == self.num_epochs-1 and ewc else False, prev_fisher = prev_fisher, prev_params = prev_params)
+                    self.train_epoch(train_loader, epoch, spec_decoup = spec_decoup, compute_new_fisher = True if epoch == self.num_epochs-1 and ewc else False, prev_fisher = prev_fisher, prev_params = prev_params)
                 epoch_test_loss, epoch_test_acc, epoch_test_confusion, epoch_test_entropy = self.test_epoch(test_loader)
+                print(f"        epoch {epoch}: train loss {epoch_train_loss}, test loss {epoch_test_loss}.")
                 train_losses[-1].append(epoch_train_loss)
                 test_losses[-1].append(epoch_test_loss)
                 train_acc[-1].append(epoch_train_acc)
@@ -295,14 +287,15 @@ class Trainer:
                 test_confusions[-1].append(epoch_test_confusion)
                 test_entropies[-1].append(epoch_test_entropy)
 
-                #INCREASE LR IF DIFFERENCE BETWEEN TWO EPOCHS GETS TOO SMALL; DECREASE IF ACC DECREASES SIGNIFICANTLY
-                if (epoch > 0): #have trained at least one epoch
-                  if (abs(test_acc[-1][-1] - test_acc[-1][-2])<5e-3): #acc increased less than 0.5%
-                    for g in self.optimizer.param_groups:
-                      g['lr'] = g['lr']*2
-                  elif (test_acc[-1][-2] - test_acc[-1][-1]> 5e-2): #acc decreased more than 5%
-                    for g in self.optimizer.param_groups:
-                      g['lr'] = g['lr']/2
+
+                # #INCREASE LR IF DIFFERENCE BETWEEN TWO EPOCHS GETS TOO SMALL; DECREASE IF ACC DECREASES SIGNIFICANTLY
+                # if (epoch > 0): #have trained at least one epoch
+                #   if (abs(test_acc[-1][-1] - test_acc[-1][-2])<5e-3): #acc increased less than 0.5%
+                #     for g in self.optimizer.param_groups:
+                #       g['lr'] = g['lr']*2
+                #   elif (test_acc[-1][-2] - test_acc[-1][-1]> 5e-2): #acc decreased more than 5%
+                #     for g in self.optimizer.param_groups:
+                #       g['lr'] = g['lr']/2
 
 
                 #REVISIT PREVIOUS TASKS
@@ -317,8 +310,6 @@ class Trainer:
                     test_acc[prev_task_no].append(prev_epoch_test_acc)
                     test_confusions[prev_task_no].append(prev_epoch_test_confusion)
                     test_entropies[prev_task_no].append(prev_epoch_test_entropy)
-
-                print(f"At end of (task {self.task_no}, epoch {epoch}) accuracy average on all tasks is: {self.get_all_task_averages(test_acc, test_loaders)}")
                 #SAVE
                 if self.save_interm:
                     metrics_save = {"train_losses": train_losses,
@@ -349,5 +340,5 @@ class Trainer:
                 "train_acc": train_acc,
                 "test_acc": test_acc,
                 "all_task_averages": self.get_all_task_averages(test_acc, test_loaders),
-                "test_confusion": test_confusions,
+                "test_confusions": test_confusions,
                 "test_entropies": test_entropies}, fisher_diag

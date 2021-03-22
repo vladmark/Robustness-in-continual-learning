@@ -1,7 +1,626 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e42feaa8-a304-4575-9812-0211c89926b2" name="Default Changelist" comment="" />
+    <list default="true" id="e42feaa8-a304-4575-9812-0211c89926b2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/task_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset_management/task_creation.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_management/task_creation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_rob.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_rob.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plotscript.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotscript.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plotting_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotting_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robust_features_for_cl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ModDenseNet_1_epochs_lr0.001_overall_metrics_tiny-imagenet-200" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_0_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_10_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_11_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_12_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_13_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_14_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_15_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_16_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_17_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_18_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_19_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_1_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_lr0.001_overall_metrics_baseline_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_overall_metrics_baseline_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_20_epochs_overall_metrics_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_2_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_3_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_4_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_5_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_6_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_7_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_8_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_0_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_0_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_0_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_0_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_1_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_1_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_1_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_1_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_2_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_2_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_2_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_2_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_3_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_3_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_3_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_3_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_4_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_4_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_4_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_4_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_5_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_5_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_5_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_5_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_6_imagenet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_6_imagenet_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_6_imagenet_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/ResNet18_9_epochs_metrics_task_6_imagenet_shuffled_ewc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_0_imagenet_cl_t7_c3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_0_imagenet_cl_t7_c3_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_1_imagenet_cl_t7_c3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_1_imagenet_cl_t7_c3_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_2_imagenet_cl_t7_c3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_2_imagenet_cl_t7_c3_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_3_imagenet_cl_t7_c3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_3_imagenet_cl_t7_c3_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_4_imagenet_cl_t7_c3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_4_imagenet_cl_t7_c3_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_5_imagenet_cl_t7_c3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_5_imagenet_cl_t7_c3_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_6_imagenet_cl_t7_c3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/VGG11_20_epochs_metrics_task_6_imagenet_cl_t7_c3_shuffled" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/acc_plotsResNet101.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/acc_plotsResNet18 - shuffled.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/savedump/acc_plotsResNet18.pdf" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +668,7 @@
       <recent name="G:\work\bit\robust-features-for-cl-master\savedump" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.robust_features_for_cl">
+  <component name="RunManager" selected="Python.main_rob">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="robust-features-for-cl-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -92,6 +711,48 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main_rob" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="robust-features-for-cl-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_rob.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="plotscript" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="robust-features-for-cl-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Dasein\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plotscript.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="robust_features_for_cl" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="robust-features-for-cl-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,6 +774,41 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="task_analysis" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="robust-features-for-cl-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Dasein\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/task_analysis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.datasets" />
+      <item itemvalue="Python.robust_features_for_cl" />
+      <item itemvalue="Python.main_rob" />
+      <item itemvalue="Python.plotscript" />
+      <item itemvalue="Python.task_analysis" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main_rob" />
+        <item itemvalue="Python.task_analysis" />
+        <item itemvalue="Python.plotscript" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -139,5 +835,21 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Trainer.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main_rob.py</url>
+          <line>132</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
