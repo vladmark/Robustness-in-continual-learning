@@ -17,4 +17,19 @@ As a further step, we also test the difference that two other methods for mitiga
 
 We use `f1_score` and confusion matrix to determine performance on the test batches of each dataset. 
 
-## Summary of files
+## File breakdown
+
+### `main_rob.py`
+Driver file, responsible for putting together the code that makes datasets and the code which trains and tests. The `make_datasets` function makes use of the auxiliary files in the folder `dataset_management` and creates datasets with images to which are applied standard transformations. For convenience, we don't also generate the tasks themselves here but we do this once independently and then only recall them. Next there is a part handling reinitalization of the model and the metrics arrays with previous values if that is wanted. The `train_datasets` function takes care of making the transiting between training consecutive tasks (the training of a task itself is taken care of by the `Trainer` class); for example it modifies the Fisher information matrix if that is required and resets the optimizer.
+
+### `Trainer.py`
+The `Trainer` class is capable to self-sufficiently train a single task and make evaluations on the test dataset once training is stopped. Mostly everything about training is a parameter of the class: the learning algorithm, learning rate and number of epochs, for example. The training and testing over single epochs are handled by the methods `train_epoch` and `test_epoch` respectively. The `train` method uses these to train and test over a single epoch. At the end of each epoch we then also test performance on all the previous tasks. 
+
+### `dataset_management`
+The `task_creation.py` file contains the code which suggests tasks and their components in terms of classes. The `consolidate_parents` function simplifies the semantic tree so that each node has only the node with the most number of children amongst its parents as its parent. To prepare the tree for DFS, it is saved as a class `DFSLeafCount` which contains additional information such as the marked vertices. DFS finding the tasks is done with the `dfs_superclass_finder` function. The `dataset_creation.py` file contains the `TinyImagenetTask` class which inherits the `torchvision.ImageFolder` one to handle datasets. The functions `get_cl_dset` and `get_tasks` are auxiliaries converting the tasks saved in a file to an array and getting a single task out of the array, respectively.
+### `Models.py`
+
+Contains handmade implementations of the standard models LeNet and DenseNet. For simplicity these are made of several instances of the class `Block` (resp. `Block2`); these "blocks" are the ones handling convolutions, all that sits between such blocks are maxpools.
+
+### `plotting_utils.py` and `plotscript.py`
+Strictly for plotting metrics. Employed separately from the driver code. The most relevant functions are `plot_acc_average_tasks` and `plot_train_rout_conf_entr` in `plotting_utils.py`. The first plots comparative graphs of `f1_score` evolution over the training of the several tasks and the second plots the evolution of confusion matrices (refer to the folder `plots` to see examples).
