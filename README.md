@@ -15,7 +15,7 @@ Next we use a variety of models and hyperparameters to train the different tasks
 
 As a further step, we also test the difference that two other methods for mitigating catastrophic forgetting have combined with our approach. The first is a technique known as ["spectral decoupling" (SD)](https://arxiv.org/pdf/2103.17171.pdf), which in our code amounts to penalising the size of the logits that the model produces in training - in other words, to penalizing overconfidence. The second technique is knonw as ["elastic weight consolidation" (EWC)](https://arxiv.org/pdf/1612.00796.pdf) and makes use of the Fisher information matrix to provide an additional cost for changing each parameter in the model; this is determined by how relevant the parameter is to performance on the previous task, and this relevance is measured by the Fisher information matrix.
 
-We use `f1_score` and confusion matrix to determine performance on the test batches of each dataset. 
+We use `f1_score` and confusion matrix to determine performance on the test batches of each dataset. This is a test
 
 ## File breakdown
 
